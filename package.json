@@ -1,0 +1,18 @@
+{
+  "name": "@daniel-glynn1/pass_em_1",
+  "private": true,
+  "version": "0.0.0",
+  "author": "Daniel Glynn",
+  "workspaces": {
+    "packages": [
+      "workspaces/*"
+    ]
+  },
+  "scripts": {
+    "start:client": "yarn workspace @pass_em_1/client start",
+    "start:server": "yarn workspace @pass_em_1/server start"
+  },
+  "dependencies": {
+    "typescript": "latest"
+  }
+}
