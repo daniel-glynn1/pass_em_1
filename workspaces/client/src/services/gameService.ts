@@ -9,9 +9,9 @@ import { SocketExceptions } from "../shared/types/socketExceptions";
 
 
 class GameService {
-  public async createGameRoom(socket: Socket, roomId: string): Promise<boolean> {
+  public async createGameRoom(socket: Socket, roomId: string, userName: string): Promise<boolean> {
     return new Promise((rs, rj) => {
-      socket.emit(ClientEvents.LobbyCreate, { roomId: roomId });
+      socket.emit(ClientEvents.LobbyCreate, { roomId: roomId, userName: userName });
       socket.on(ServerEvents.LobbyCreated, () => {
         rs(true);
       });
@@ -19,9 +19,9 @@ class GameService {
     });
   }
 
-  public async joinGameRoom(socket: Socket, roomId: string): Promise<boolean> {
+  public async joinGameRoom(socket: Socket, roomId: string, userName: string): Promise<boolean> {
     return new Promise((rs, rj) => {
-      socket.emit(ClientEvents.LobbyJoin, { roomId: roomId });
+      socket.emit(ClientEvents.LobbyJoin, { roomId: roomId, userName: userName });
       socket.on(ServerEvents.LobbyJoined, () => {
         rs(true);
       });

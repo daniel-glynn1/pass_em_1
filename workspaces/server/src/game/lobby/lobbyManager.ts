@@ -38,7 +38,7 @@ export class LobbyManager
     return lobby;
   }
 
-  public joinLobby(lobbyName: string, client: AuthenticatedSocket): void
+  public joinLobby(lobbyName: string, client: AuthenticatedSocket, userName: string): void
   {
     const lobby = this.lobbies.get(lobbyName);
 
@@ -56,6 +56,6 @@ export class LobbyManager
       return;
     }
 
-    lobby.addClient(client);
+    lobby.addClient(client, userName);
   }
 }

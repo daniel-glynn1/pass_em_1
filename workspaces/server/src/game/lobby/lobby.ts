@@ -24,11 +24,14 @@ export class Lobby
   {
   }
 
-  public addClient(client: AuthenticatedSocket): void
+  public addClient(client: AuthenticatedSocket, userName: string): void
   {
     this.clients.set(client.id, client);
     client.join(this.id);
     client.data.lobby = this;
+    client.data.userName = userName;
+
+    console.log(client.data);
 
     console.log("lobby now has: ", this.clients.size, " clients");
     if (this.clients.size >= this.maxClients) {

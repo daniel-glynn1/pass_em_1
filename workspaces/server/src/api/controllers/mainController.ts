@@ -24,8 +24,6 @@ export class MainController {
   public onConnection(@ConnectedSocket() client: Socket, @SocketIO() io: Server) {
     console.log("New socket connected: ", client.id);
 
-   
-
     if (!this.lobbyManager.server) {
       this.lobbyManager.server = io;
       console.log("lobbymanager server has been set");
@@ -52,7 +50,7 @@ export class MainController {
       return;
     }
     
-    lobby.addClient(client);
+    lobby.addClient(client, message.userName);
 
     client.emit(ServerEvents.LobbyCreated);
 
@@ -62,7 +60,7 @@ export class MainController {
   public async joinLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
     console.log(client.id, " is joining lobby with name: ", message.roomId);
 
-    this.lobbyManager.joinLobby(message.roomId, client);
+    this.lobbyManager.joinLobby(message.roomId, client, message.userName);
 
     client.emit(ServerEvents.LobbyJoined);
   }

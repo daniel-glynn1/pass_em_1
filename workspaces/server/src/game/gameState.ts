@@ -103,7 +103,7 @@ export class GameState
     if (this.isFinished || !this.isStarted) {
       return;
     }
-    
+
     // ignore if request is not from player whose turn it is
     if (this.currentTurnPlayer != client.id) {
       return;
@@ -137,11 +137,13 @@ export class GameState
     // initialize scores for each player
     for (const [id, socket] of this.lobby.clients) {
       const newPlayer: Player = {
-        name: "Alice",
+        name: socket.data.userName,
         score: 0
       };
       this.scores[id] = newPlayer;
     }
+
+    console.log(this.scores);
 
   }
 
