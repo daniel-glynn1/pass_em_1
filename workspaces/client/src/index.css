@@ -1,7 +1,32 @@
+:root {
+  --black: #090909;
+  --darkgray: #1c1c1c;
+  --gray: #5a5a5a;
+  --white: #FFFDFD;
+
+  --pink1: #F72585;
+  --purple1: #B5179E;
+  --purple2: #7209B7;
+  --purple3: #560BAD;
+  --purple4: #480CA8;
+  --blue1: #3A0CA3;
+  --blue2: #3F37C9;
+  --blue3: #4361EE;
+  --blue4: #4895EF;
+  --blue5: #4CC9F0;
+  
+}
+
 html,
 body {
   width: 100%;
   height: 100%;
+  background-color: var(--darkgray);
+  color: var(--white);
+}
+
+button {
+  cursor:pointer;
 }
 
 body {

@@ -12,6 +12,7 @@ export class GameState
   public isStarted: boolean = false;
   public isFinished: boolean = false;
   public numPlayers: number = 0;
+  public maxNumPlayers: number = 0;
   public currentPigIndex1: number = 0;
   public currentPigIndex2: number = 0;
   public currentRollScore: number = 0;
@@ -41,7 +42,6 @@ export class GameState
       message: 'Game started !',
     });
 
-    console.log(this);
     this.lobby.dispatchLobbyState();
 
   }
@@ -133,17 +133,6 @@ export class GameState
 
     const firstPlayer = firstClient[0];
     this.currentTurnPlayer = firstPlayer;
-
-    // initialize scores for each player
-    for (const [id, socket] of this.lobby.clients) {
-      const newPlayer: Player = {
-        name: socket.data.userName,
-        score: 0
-      };
-      this.scores[id] = newPlayer;
-    }
-
-    console.log(this.scores);
 
   }
 

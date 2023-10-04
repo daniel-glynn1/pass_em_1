@@ -4,14 +4,10 @@ import { ServerEvents } from "../shared/types/serverEvents";
 import { ServerPayloads } from "../shared/types/serverPayloads";
 import { SocketExceptions } from "../shared/types/socketExceptions";
 
-
-
-
-
 class GameService {
-  public async createGameRoom(socket: Socket, roomId: string, userName: string): Promise<boolean> {
+  public async createGameRoom(socket: Socket, roomId: string, userName: string, numPlayers: number): Promise<boolean> {
     return new Promise((rs, rj) => {
-      socket.emit(ClientEvents.LobbyCreate, { roomId: roomId, userName: userName });
+      socket.emit(ClientEvents.LobbyCreate, { roomId: roomId, userName: userName, numPlayers: numPlayers });
       socket.on(ServerEvents.LobbyCreated, () => {
         rs(true);
       });

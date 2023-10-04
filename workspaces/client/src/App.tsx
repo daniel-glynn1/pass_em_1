@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from 'recoil';
-import logo from './logo.svg';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import './App.css';
-import { io } from 'socket.io-client';
 import socketService from './services/socketService';
-import { JoinRoom } from './components/joinRoom';
-import { Game } from './components/game';
+import { JoinRoom } from './components/joinRoom/joinRoom';
+import { Game } from './components/game/game';
 import gameService from './services/gameService';
-import { CurrentLobbyState } from './components/gameState';
+import { CurrentLobbyState } from './components/game/gameStateType';
 
 function App() {
   const [gameState, setGameState] = useRecoilState(CurrentLobbyState);
@@ -34,14 +32,12 @@ function App() {
       connectSocket();
     }
       
-
     handleGameUpdate();
   }, []);
 
   return (
     
     <div>
-      <h2>Welcome to Pass Em</h2>
       <div>
         {gameState === null ? 
           <JoinRoom /> : 

@@ -9,6 +9,7 @@ export type ServerPayloads = {
     isStarted: boolean;
     isFinished: boolean;
     numPlayers: number;
+    maxNumPlayers: number;
     currentPigIndex1: number;
     currentPigIndex2: number;
     currentRollScore: number;

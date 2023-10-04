@@ -44,7 +44,7 @@ export class MainController {
   public async createLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
     console.log(client.id, " is creating lobby with name: ", message.roomId);
 
-    const lobby = this.lobbyManager.createLobby(message.roomId, client, 4);
+    const lobby = this.lobbyManager.createLobby(message.roomId, client, message.numPlayers);
 
     if (!lobby) {
       return;
@@ -69,6 +69,11 @@ export class MainController {
   public async leaveLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
     console.log("User leaving room: ", message, client.id);
     client.data.lobby?.removeClient(client);
+
+    // remove lobby if game has ended
+    if (client.data.lobby.gameState.isFinished) {
+      this.lobbyManager.deleteLobby(client.data.lobby.name);
+    }
 
   }
 

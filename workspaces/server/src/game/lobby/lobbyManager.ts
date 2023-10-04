@@ -17,6 +17,11 @@ export class LobbyManager
   public terminateSocket(client: AuthenticatedSocket): void
   {
     client.data.lobby?.removeClient(client);
+
+    // remove lobby if game has ended
+    if (client.data.lobby.gameState.isFinished) {
+      this.deleteLobby(client.data.lobby.name);
+    }
   }
 
   public createLobby(lobbyName: string, client: AuthenticatedSocket, maxClients: number): Lobby | null
@@ -56,6 +61,18 @@ export class LobbyManager
       return;
     }
 
+    if (lobby.gameState.isFinished) {
+      client.emit(SocketExceptions.LobbyError, {
+        error: "Lobby is full"
+      });
+      return;
+    }
+
     lobby.addClient(client, userName);
   }
+
+  public deleteLobby(lobbyName: string): void {
+    this.lobbies.delete(lobbyName);
+  }
+  
 }

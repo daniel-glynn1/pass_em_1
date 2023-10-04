@@ -3,6 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { ServerEvents } from '../../../../shared/types/serverEvents';
 import { GameState } from '../../game/gameState';
 import { ServerPayloads } from '../../../../shared/types/serverPayloads';
+import { Player } from '../../../../shared/types/player';
 import { AuthenticatedSocket } from '../../game/types';
 
 
@@ -31,6 +32,14 @@ export class Lobby
     client.data.lobby = this;
     client.data.userName = userName;
 
+    const newPlayer: Player = {
+      name: userName,
+      score: 0
+    };
+    this.gameState.scores[client.id] = newPlayer;
+
+    this.gameState.maxNumPlayers = this.maxClients;
+
     console.log(client.data);
 
     console.log("lobby now has: ", this.clients.size, " clients");
@@ -49,8 +58,9 @@ export class Lobby
 
     console.log("lobby now has: ", this.clients.size, " clients");
 
-    // If player leave then the game isn't worth to play anymore
-    this.gameState.triggerFinish();
+    if (this.gameState.isStarted) {
+      this.gameState.triggerFinish();
+    }
 
     // Alert the remaining player that client left lobby
     this.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
@@ -69,6 +79,7 @@ export class Lobby
       isStarted: this.gameState.isStarted,
       isFinished: this.gameState.isFinished,
       numPlayers: this.clients.size,
+      maxNumPlayers: this.gameState.maxNumPlayers,
       currentPigIndex1: this.gameState.currentPigIndex1,
       currentPigIndex2: this.gameState.currentPigIndex2,
       currentRollScore: this.gameState.currentRollScore,
