@@ -69,11 +69,13 @@ export class MainController {
   public async leaveLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
     console.log("User leaving room: ", message, client.id);
     client.data.lobby?.removeClient(client);
-
+    
     // remove lobby if game has ended
     if (client.data.lobby.gameState.isFinished) {
       this.lobbyManager.deleteLobby(client.data.lobby.name);
     }
+
+    client.data.lobby = null;
 
   }
 

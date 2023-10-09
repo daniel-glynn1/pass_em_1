@@ -1,0 +1,5 @@
+div#chatOuter {
+  background-color: var(--darkgray);
+  flex: 1;
+  padding-left: 10px;
+}

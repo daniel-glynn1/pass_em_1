@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import './App.css';
 import socketService from './services/socketService';
 import { JoinRoom } from './components/joinRoom/joinRoom';
-import { Game } from './components/game/game';
+import { Game } from './components/game/game/game';
 import gameService from './services/gameService';
 import { CurrentLobbyState } from './components/game/gameStateType';
 
@@ -27,22 +27,35 @@ function App() {
     }
   }
 
+  const removeGameUpdate = () => {
+    if (socketService.socket) {
+      gameService.offGameUpdate(socketService.socket, () => {});
+    }
+  }
+  
+
   useEffect(() => {
+    // window.onbeforeunload = function(event)
+    // {
+    //     return window.confirm("Confirm refresh");
+    // };
+
     if (!socketService.socket) {
       connectSocket();
     }
       
     handleGameUpdate();
+
+    return () => {
+      removeGameUpdate();
+    }
   }, []);
 
   return (
-    
-    <div>
-      <div>
-        {gameState === null ? 
-          <JoinRoom /> : 
-          <Game />}
-      </div>
+    <div id="app">
+      {gameState === null ? 
+        <JoinRoom /> : 
+        <Game />}
     </div>
     
   );

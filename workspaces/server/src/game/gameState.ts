@@ -20,6 +20,15 @@ export class GameState
   public currentTurnScore: number = 0;
   public scores: Record<Socket['id'], Player> = {};
 
+  private pigScoreMap: Map<number, number> = new Map<number, number>([
+    [0, 0],
+    [1, 0],
+    [2, 5],
+    [3, 5],
+    [4, 10],
+    [5, 15]
+  ]);
+
   constructor(
     private readonly lobby: Lobby,
   )
@@ -49,7 +58,11 @@ export class GameState
   public triggerFinish(): void
   {
     console.log("triggering finish...");
-    if (this.isFinished || !this.isStarted) {
+    if (this.isFinished) {
+      return;
+    }
+    if (!this.isStarted) {
+      this.isFinished = true;
       return;
     }
 
@@ -75,16 +88,16 @@ export class GameState
     }
 
     // get random indices for pigs
-    const index1: number = this.getRandomIndex(0, 6);
-    const index2: number = this.getRandomIndex(0, 6);
+    const pig1: number = this.getRandomPig();
+    const pig2: number = this.getRandomPig();
 
     // determine score of roll
-    const rollScore: number = this.calculateScore(index1, index2);
-    const isPigOut: boolean = this.isPigOut(index1, index2);
+    const rollScore: number = this.calculateScore(pig1, pig2);
+    const isPigOut: boolean = this.isPigOut(pig1, pig2);
 
     // update game state
-    this.currentPigIndex1 = index1;
-    this.currentPigIndex2 = index2;
+    this.currentPigIndex1 = pig1;
+    this.currentPigIndex2 = pig2;
     this.currentRollScore = rollScore;
 
     if (isPigOut) {
@@ -136,16 +149,45 @@ export class GameState
 
   }
 
-  private getRandomIndex(min: number, max: number): number {
-    return Math.floor(Math.random() * max) + min;
+  private getRandomPig(): number {
+    let num = Math.floor(Math.random() * 1000);
+    if (num < 5) {                                  // 0.5% Jowler
+      return 5;
+    } else if (num < 5 + 25) {                      // 2.5% Snouter 
+      return 4;
+    } else if (num < 5 + 25 + 100) {                // 10.0% Trotter
+      return 3;
+    } else if (num < 5 + 25 + 100 + 200) {          // 20.0% Razorback
+      return 2;
+    } else if (num < 5 + 25 + 100 + 200 + 350) {    // 35.0% Side dot up
+      return 1;
+    } else {                                        // 32.0% Side dot down
+      return 0; 
+    }
   }
 
-  private calculateScore(index1: number, index2: number): number {
-    return index1 + index2;
+  private calculateScore(pig1: number, pig2: number): number {
+    var score: number = 0;
+
+    if ((pig1 === 0 && pig2 === 1) || (pig1 === 1 && pig2 === 0)) { // pig out
+      score = 0;
+    } else if (pig1 === 1 && pig2 === 1) { // one point
+      score = 1;
+    } else {
+      score = this.pigScoreMap.get(pig1)! + this.pigScoreMap.get(pig2)!;
+      
+      if (pig1 === pig2) { // double score if they are the same
+        score *= 2;
+      }
+    }
+
+    return score;
   }
 
-  private isPigOut(index1: number, index2: number): boolean {
-    return (index1 <= 1 && index2 <= 1);
+  
+
+  private isPigOut(pig1: number, pig2: number): boolean {
+    return (pig1 === 0 && pig2 === 1) || (pig1 === 1 && pig2 === 0);
   }
 
   private getNextPlayer(): Socket['id'] {

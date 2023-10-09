@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+import { RecoilRoot } from 'recoil';
 
 
 const root = ReactDOM.createRoot(
@@ -12,9 +12,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-      <App />
-    </RecoilRoot>
-   
+      <div id="root">
+        <App />
+      </div>
+    </RecoilRoot>  
   </React.StrictMode>
 );
 

@@ -40,8 +40,6 @@ export class Lobby
 
     this.gameState.maxNumPlayers = this.maxClients;
 
-    console.log(client.data);
-
     console.log("lobby now has: ", this.clients.size, " clients");
     if (this.clients.size >= this.maxClients) {
       this.gameState.triggerStart();
@@ -54,12 +52,13 @@ export class Lobby
   {
     this.clients.delete(client.id);
     client.leave(this.id);
-    client.data.lobby = null;
 
     console.log("lobby now has: ", this.clients.size, " clients");
 
-    if (this.gameState.isStarted) {
+    if (this.gameState.isStarted || this.clients.size === 0) {
       this.gameState.triggerFinish();
+    } else {
+      delete this.gameState.scores[client.id];
     }
 
     // Alert the remaining player that client left lobby

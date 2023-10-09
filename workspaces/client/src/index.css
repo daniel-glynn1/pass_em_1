@@ -14,6 +14,7 @@
   --blue3: #4361EE;
   --blue4: #4895EF;
   --blue5: #4CC9F0;
+  --lightgreen: #80ed99;
   
 }
 
@@ -36,9 +37,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* display: flex;
+  flex-direction: column; /* Make it a vertical flex container if needed */
+  /* background-color: var(--gray); */ 
+  /* color: var(--white); */
+
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* #root {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+} */
+
+

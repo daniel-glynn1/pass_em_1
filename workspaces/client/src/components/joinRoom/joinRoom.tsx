@@ -34,6 +34,12 @@ export function JoinRoom(props: IJoinRoomProps) {
     }
   }
 
+  const handleRoomNameKeyDown = (e: React.KeyboardEvent<any>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  }
+
   const createOrJoinSelected = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -64,9 +70,6 @@ export function JoinRoom(props: IJoinRoomProps) {
         alert(err);
       });
 
-      if (!joined) {
-        return;
-      }
     } else {
       const joined = await gameService
       .joinGameRoom(socket, roomName, userName)
@@ -74,9 +77,7 @@ export function JoinRoom(props: IJoinRoomProps) {
         alert(err);
       });
 
-      if (!joined) {
-       return;
-      }
+      
     }
 
     setJoining(false);
@@ -102,7 +103,7 @@ export function JoinRoom(props: IJoinRoomProps) {
             </div>
             <div id='nameInput'>
               <p>Enter your name</p>
-              <input type="text" placeholder="name" value={userName} onChange={handleUserNameChange} onKeyDown={handleUserNameKeyDown}/>
+              <input type="text" maxLength={15} placeholder="name" value={userName}  required onChange={handleUserNameChange} onKeyDown={handleUserNameKeyDown}/>
             </div>
             <div id='createOrJoin'>
               <p>Do you want to create or join a lobby?</p>
@@ -122,12 +123,12 @@ export function JoinRoom(props: IJoinRoomProps) {
             </button>
             <div id='roomInput'>
               <p>Room Name:</p>
-              <input type="text" placeholder="Room Name" value={roomName} onChange={handleRoomNameChange}/>
+              <input type="text" required maxLength={15} placeholder="Room Name" value={roomName} onChange={handleRoomNameChange} onKeyDown={handleRoomNameKeyDown}/>
             </div>
             {isCreator && 
               <div id='numPlayersInput'>
                 <p>Number of players (2-8):</p>
-                <input type="number" value={numPlayers} min='2' max='8' step='1' onChange={handleNumPlayersChange}/>
+                <input type="number" required value={numPlayers} min='2' max='8' step='1' onChange={handleNumPlayersChange}/>
             
               </div>
             }

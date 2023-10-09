@@ -42,9 +42,16 @@ class GameService {
   }
 
 
-  public async onStartGame(socket: Socket, listener: () => void) {
-    socket.on(ServerEvents.GameStarted, listener);
+  public async offGameUpdate(socket: Socket, listener: (data: ServerPayloads[ServerEvents.LobbyState]) => void) {
+    socket.off(ServerEvents.LobbyState, listener);
   }
+
+  public async offGameMessage(socket: Socket, listener: (data: ServerPayloads[ServerEvents.GameMessage]) => void) {
+    socket.off(ServerEvents.GameMessage, listener);
+  }
+
+
+
 
 }
 

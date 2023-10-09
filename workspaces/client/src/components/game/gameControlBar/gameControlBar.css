@@ -1,0 +1,64 @@
+div#controlBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 10px;
+  background-color: var(--darkgray);
+}
+
+div#gameButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 40%;
+  align-self: flex-end;
+
+}
+
+div#gameButtons > button {
+  height: 50px;
+  width: 45%;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--white);
+}
+
+div#gameButtons > button:disabled {
+  background-color: var(--gray);
+}
+
+button#passButton {
+  background-color: var(--pink1);
+}
+
+button#rollButton {
+  background-color: var(--blue5);
+}
+
+div#turnInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: end;
+  margin: 5px;
+  gap: 5px;
+}
+
+div#turnInfo p, div#turnInfo h4 {
+  margin: 0;
+}
+
+div#turnInfo h4 {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+h4#myTurn {
+  color: var(--blue5);
+}
+
+

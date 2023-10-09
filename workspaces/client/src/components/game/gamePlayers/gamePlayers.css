@@ -1,0 +1,79 @@
+div#playersOuter {
+  background-color: var(--darkgray);
+  flex: 1;
+  padding: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+div.playerScore, div.playerScoreTurn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  border: 5px solid;
+  padding-left: 5px;
+  padding-right: 5px;
+  
+  border-radius: 10px;
+  height: 30px;
+}
+
+
+
+div.playerScore p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.playerScoreTurn p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  font-weight: bold;
+  color: var(--blue5);
+}
+
+p.scoreText {
+  width: 30px;
+  text-align: end;
+}
+
+div#playerScore-0 {
+  border-color: var(--purple1);
+}
+
+div#playerScore-1 {
+  border-color: var(--purple2);
+}
+
+div#playerScore-2 {
+  border-color: var(--purple3);
+}
+
+div#playerScore-3 {
+  border-color: var(--purple4);
+}
+
+div#playerScore-4 {
+  border-color: var(--blue1);
+}
+
+div#playerScore-5 {
+  border-color: var(--blue2);
+}
+
+div#playerScore-6 {
+  border-color: var(--blue3);
+}
+
+div#playerScore-7 {
+  border-color: var(--blue4);
+}
+

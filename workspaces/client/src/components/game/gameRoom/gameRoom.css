@@ -1,0 +1,39 @@
+div#gameRoom {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  background-color: var(--black);
+}
+
+div#main {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  width: 80%;
+  height: 100%;
+  gap: 10px;
+}
+
+div#header {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2em;
+  padding-right: 2em;
+  background-color: var(--darkgray);
+
+}
+
+div#sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding-left: 10px;
+
+  width: 20%;
+  height: 100%;
+  
+}
