@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { CurrentLobbyState } from '../gameStateType';
+import { CurrentLobbyState } from '../recoilTypes';
 import gameService from '../../../services/gameService';
 import socketService from '../../../services/socketService';
 import './gameControlBar.css';
@@ -8,9 +8,8 @@ import './gameControlBar.css';
 
 export function GameControlBar() {
   const gameState = useRecoilValue(CurrentLobbyState)!;
-
-  let isMyTurn = socketService.socket && gameState.currentTurnPlayer === socketService.socket.id;
-  let addedScore = gameState.scores[gameState.currentTurnPlayer].score + gameState.currentTurnScore;
+  let isMyTurn = gameState.isStarted && socketService.socket && gameState.currentTurnPlayer === socketService.socket.id;
+  let addedScore = gameState.isStarted ? gameState.scores[gameState.currentTurnPlayer].score + gameState.currentTurnScore : 0;
 
   const handleRollButton = () => {
     if (socketService.socket)
@@ -20,6 +19,11 @@ export function GameControlBar() {
   const handlePassButton = () => {
     if (socketService.socket)
       gameService.updateGame(socketService.socket, 'pass');
+  }
+
+  const handleStartGameButton = () => {
+    if (socketService.socket)
+      gameService.startGameEarly(socketService.socket);
   }
 
   return (
@@ -38,16 +42,22 @@ export function GameControlBar() {
           Roll
         </button>
       </div>
-      
 
-      <div id='turnInfo'>
-        {isMyTurn ? 
-          <h4 id={isMyTurn ? 'myTurn' : 'notMyTurn'}>Your turn</h4> :
-          <h4>{gameState.scores[gameState.currentTurnPlayer].name}'s turn</h4>
-        }
-        <p>Turn score: {gameState.currentTurnScore}</p>
-        <p>Total score: {gameState.scores[gameState.currentTurnPlayer].score} ({addedScore})</p>
-      </div>
+      {gameState.isStarted ? (
+        <div id='turnInfo'>
+          
+          {isMyTurn ? 
+            <h4 id={isMyTurn ? 'myTurn' : 'notMyTurn'}>Your turn</h4> :
+            <h4>{gameState.scores[gameState.currentTurnPlayer].name}'s turn</h4>
+          }
+          <p>Turn score: {gameState.currentTurnScore}</p>
+          <p>Total score: {gameState.scores[gameState.currentTurnPlayer].score} ({addedScore})</p>
+        </div>
+      ) : (
+        gameState.numPlayers > 1 &&
+          <button id='startgame' onClick={() => handleStartGameButton()} >Start Game Now</button>
+
+      )}
     </div>
   );
 }

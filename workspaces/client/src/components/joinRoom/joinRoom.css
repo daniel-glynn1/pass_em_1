@@ -1,8 +1,8 @@
-div#header {
+div#joinHeader {
   display: flex;
   justify-content: space-between;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 div#outer {
@@ -65,16 +65,18 @@ div#buttons {
 
 
 
-button {
-  height: 3em;
+div#outer button {
+  /* height: 3em; */
   border: none;
   border-radius: 10px;
-  font-weight: bold;
-  font-size: 16px;
+  
 }
 
 button.select {
   width: 40%;
+  height: 3em;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 button#create {
@@ -90,14 +92,17 @@ button#join {
 
 button#start {
   width: 40%;
+  height: 3em;
   align-self: center;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 button#goback {
   width: 20%;
   height: 2.5em;
-  /* font-weight: normal; */
   font-size: 12px;
+  font-weight: bold;
   align-self: center;
   background-color: var(--gray);
   color: var(--white);

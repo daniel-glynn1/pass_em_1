@@ -5,10 +5,29 @@ import socketService from './services/socketService';
 import { JoinRoom } from './components/joinRoom/joinRoom';
 import { Game } from './components/game/game/game';
 import gameService from './services/gameService';
-import { CurrentLobbyState } from './components/game/gameStateType';
+import { ChatState, CurrentLobbyState } from './components/game/recoilTypes';
+import { ServerEvents } from './shared/types/serverEvents';
+import { ServerPayloads } from './shared/types/serverPayloads';
 
 function App() {
   const [gameState, setGameState] = useRecoilState(CurrentLobbyState);
+  const [chatState, setChatState] = useRecoilState(ChatState);
+
+  const messageListener = (data: ServerPayloads[ServerEvents.GameMessage]) => {
+    setChatState((oldChat: ServerPayloads[ServerEvents.GameMessage][]) => [...oldChat, data]);
+  }
+
+  const handleGameMessage = () => {
+    if (socketService.socket) {
+      gameService.onGameMessage(socketService.socket, messageListener);
+    }
+  }
+
+  const removeGameMessage = () => {
+    if (socketService.socket) {
+      gameService.offGameMessage(socketService.socket, messageListener);
+    }
+  }
 
 
   const connectSocket = async () => {
@@ -29,7 +48,9 @@ function App() {
 
   const removeGameUpdate = () => {
     if (socketService.socket) {
-      gameService.offGameUpdate(socketService.socket, () => {});
+      gameService.offGameUpdate(socketService.socket, (data) => {
+        setGameState(data);
+      });
     }
   }
   
@@ -39,15 +60,18 @@ function App() {
     // {
     //     return window.confirm("Confirm refresh");
     // };
-
+    
     if (!socketService.socket) {
       connectSocket();
     }
       
     handleGameUpdate();
+    handleGameMessage();
 
     return () => {
       removeGameUpdate();
+      removeGameMessage();
+      socketService.socket?.off(ServerEvents.GameMessage);
     }
   }, []);
 

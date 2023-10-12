@@ -17,23 +17,19 @@ div#main {
   gap: 10px;
 }
 
-div#header {
-  display: flex;
-  justify-content: space-between;
-  padding-left: 2em;
-  padding-right: 2em;
-  background-color: var(--darkgray);
-
-}
-
 div#sidebar {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
+  /* gap: 10px; */
   padding-left: 10px;
+  z-index: 2;
 
   width: 20%;
   height: 100%;
   
+}
+
+div#sidebar h4 {
+  margin: 0px;
+  padding-bottom: 0px;
 }

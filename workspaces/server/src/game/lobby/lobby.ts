@@ -3,6 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { ServerEvents } from '../../../../shared/types/serverEvents';
 import { GameState } from '../../game/gameState';
 import { ServerPayloads } from '../../../../shared/types/serverPayloads';
+import { SocketExceptions } from '../../../../shared/types/socketExceptions';
 import { Player } from '../../../../shared/types/player';
 import { AuthenticatedSocket } from '../../game/types';
 
@@ -20,7 +21,7 @@ export class Lobby
   constructor(
     private readonly server: Server,
     public readonly name: string,
-    public readonly maxClients: number,
+    public maxClients: number,
   )
   {
   }
@@ -40,20 +41,31 @@ export class Lobby
 
     this.gameState.maxNumPlayers = this.maxClients;
 
-    console.log("lobby now has: ", this.clients.size, " clients");
+    this.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
+      senderCode: 100,
+      senderName: '',
+      message: client.data.userName + ' joined the game',
+    });
+
     if (this.clients.size >= this.maxClients) {
       this.gameState.triggerStart();
     }
 
     this.dispatchLobbyState();
   }
+  
 
   public removeClient(client: AuthenticatedSocket): void
   {
     this.clients.delete(client.id);
     client.leave(this.id);
 
-    console.log("lobby now has: ", this.clients.size, " clients");
+    // Alert the remaining players that client left lobby
+    this.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
+      senderCode: 100,
+      senderName: '',
+      message: client.data.userName + ' left the game',
+    });
 
     if (this.gameState.isStarted || this.clients.size === 0) {
       this.gameState.triggerFinish();
@@ -61,13 +73,30 @@ export class Lobby
       delete this.gameState.scores[client.id];
     }
 
-    // Alert the remaining player that client left lobby
-    this.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
-      color: 'blue',
-      message: 'Opponent left lobby',
-    });
+    
 
     this.dispatchLobbyState();
+    
+  }
+
+  public startGameEarly(client: AuthenticatedSocket): void {
+    if (this.clients.size <= 1) {
+      if (!client.data.lobby) {
+        client.emit(SocketExceptions.LobbyError, {
+          error: "Can't start a game with only one player!"
+        });
+      }
+    }
+
+    this.maxClients = this.clients.size;
+    this.gameState.maxNumPlayers = this.clients.size;
+
+    this.gameState.triggerStart();
+    this.dispatchLobbyState();
+  }
+
+  public sendChatMessage(chatMessage: ServerPayloads[ServerEvents.GameMessage]): void {
+    this.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, chatMessage);
   }
 
   public dispatchLobbyState(): void

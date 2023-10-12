@@ -76,7 +76,6 @@ export function JoinRoom(props: IJoinRoomProps) {
       .catch((err) => {
         alert(err);
       });
-
       
     }
 
@@ -88,7 +87,7 @@ export function JoinRoom(props: IJoinRoomProps) {
 
   return (
     <div>
-      <div id='header'>
+      <div id='joinHeader'>
         <h2>Pass 'Em</h2>
         <h3>{userName}</h3>
       </div>
@@ -125,7 +124,7 @@ export function JoinRoom(props: IJoinRoomProps) {
               <p>Room Name:</p>
               <input type="text" required maxLength={15} placeholder="Room Name" value={roomName} onChange={handleRoomNameChange} onKeyDown={handleRoomNameKeyDown}/>
             </div>
-            {isCreator && 
+            {isCreator &&
               <div id='numPlayersInput'>
                 <p>Number of players (2-8):</p>
                 <input type="number" required value={numPlayers} min='2' max='8' step='1' onChange={handleNumPlayersChange}/>

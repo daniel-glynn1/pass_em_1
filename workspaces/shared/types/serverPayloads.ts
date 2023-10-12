@@ -20,6 +20,7 @@ export type ServerPayloads = {
 
   [ServerEvents.GameMessage]: {
     message: string;
-    color?: 'green' | 'red' | 'blue' | 'orange';
+    senderName: string;
+    senderCode: number;
   };
 };

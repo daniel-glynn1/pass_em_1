@@ -1,5 +1,118 @@
 div#chatOuter {
   background-color: var(--darkgray);
   flex: 1;
+  min-height: 40%;
+  /* overflow-y: auto; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding-top: 10px;
+  
+}
+
+h4#chatTitle {
   padding-left: 10px;
+}
+
+div#chatList {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+  gap: 7px;
+  
+}
+
+div.chatMessage {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+p.chatItem {
+  background-color: var(--black);
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0;
+  font-size: 14px;
+}
+
+p.chatName {
+  margin: 0;
+  /* margin-top: 5px; */
+  font-size: 12px;
+}
+
+form#chat {
+  /* width: 100%; */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+  gap: 2px;
+  padding: 5px;
+  padding-top: 10px;
+
+}
+
+input#chatinput {
+  height: 35px;
+  flex: 1;
+  /* width: 75%; */
+  border-radius: 10px;
+  border: 1px solid var(--gray);
+  background-color: var(--black);
+  color: var(--white);
+}
+
+button#submitchat {
+  height: 100%;
+  width: 35px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--pink1);
+  color: var(--white);
+}
+
+img#sendicon {
+  height: 15px;
+  
+}
+
+#chatItem-100 {
+  border-color: var(--white);
+}
+#chatItem-0 {
+  border-color: var(--purple1);
+}
+#chatItem-1 {
+  border-color: var(--purple2);
+}
+#chatItem-2 {
+  border-color: var(--purple3);
+}
+#chatItem-3 {
+  border-color: var(--purple4);
+}
+#chatItem-4 {
+  border-color: var(--blue1);
+}
+#chatItem-5 {
+  border-color: var(--blue2);
+}
+#chatItem-6 {
+  border-color: var(--blue3);
+}
+#chatItem-7 {
+  border-color: var(--blue4);
 }

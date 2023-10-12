@@ -6,9 +6,11 @@ export enum ServerEvents
   // Lobby
   LobbyCreated = 'server.lobby.created',
   LobbyJoined = 'server.lobby.joined',
+  LobbyLeft = 'server.lobby.left',
   LobbyState = 'server.lobby.state',
 
   // Game
   GameStarted = 'server.game.started',
+  GameFinished = 'server.game.finished',
   GameMessage = 'server.game.message',
 }

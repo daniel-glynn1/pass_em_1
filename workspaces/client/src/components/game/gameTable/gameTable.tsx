@@ -1,5 +1,8 @@
-import { useRecoilValue } from 'recoil';
-import { CurrentLobbyState } from '../gameStateType';
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
+import { ShowMenuState, ChatState, CurrentLobbyState } from '../recoilTypes';
+import gameService from '../../../services/gameService';
+import socketService from '../../../services/socketService';
+
 
 import './gameTable.css';
 
@@ -17,6 +20,9 @@ const pigImages = [
 
 export function GameTable() {
   const gameState = useRecoilValue(CurrentLobbyState)!;
+  const setGameState = useSetRecoilState(CurrentLobbyState);
+  const [chatState, setChatState] = useRecoilState(ChatState);
+  const [isShowMenu, setShowMenu] = useRecoilState(ShowMenuState);
 
   let players = Object.entries(gameState.scores);
 
@@ -68,21 +74,85 @@ export function GameTable() {
 
   }
 
-  let rollName = determineRollName(gameState.currentPigIndex1, gameState.currentPigIndex2);
+  const calculateWinner = () => {
+    let maxScore: number = 0;
+    let maxName: string = '';
+    for (const key in gameState.scores) {
+      if (gameState.scores.hasOwnProperty(key)) {
+        const value = gameState.scores[key];
+        if (value.score > maxScore) {
+          maxScore = value.score;
+          maxName = value.name;
+        }
+      }
+    }
+
+    if (maxScore >= 100) {
+      return maxName;
+    }
+
+    return '';
+
+  }
+
+
+  const handleLeaveButton = async () => {
+    if (socketService.socket) {
+      const left = await gameService
+      .leaveGameRoom(socketService.socket)
+      .catch((err) => {
+        alert(err);
+      });
+      
+      setGameState(null);
+      setChatState([]);
+
+    }
+  }
+
+  let rollName: string = determineRollName(gameState.currentPigIndex1, gameState.currentPigIndex2);
+  let winnerName: string = calculateWinner();
 
   return (
     <div id="tableOuter">
+      {isShowMenu && 
+      <div id='menu'>
+        <div id='menuInner'>
+          <button id='leave' onClick={() => handleLeaveButton()} >Leave</button>
+        </div>
+      </div>
+      }
       <div id="tableWithPlayers">
         <div id="table">
           <div id="pigInfo">
-            <div id="pigs">
-              <img src={pigImages[gameState.currentPigIndex1]}></img>
-              <img src={pigImages[gameState.currentPigIndex2]}></img>
-            </div>
-            <div id='pigScore'>
-              <p id='rollName'>{rollName}</p>
-              <p id='rollScore'>{gameState.currentRollScore}</p>
-            </div>
+            {(gameState.isStarted && !gameState.isFinished) && 
+              <div id="pigs">
+                <img src={pigImages[gameState.currentPigIndex1]}></img>
+                <img src={pigImages[gameState.currentPigIndex2]}></img>
+              </div>
+            }
+            
+            {(gameState.isStarted && !gameState.isFinished) && 
+              <div id='pigScore'>
+                <p id='rollName'>{rollName}</p>
+                <p id='rollScore'>{gameState.currentRollScore}</p>
+              </div>
+            }
+
+            {!gameState.isStarted && 
+              <div className='tableMessage'>
+                <h4 id='roomName'>{gameState.lobbyName}</h4>
+                <h4>Waiting for players to join ({gameState.numPlayers}/{gameState.maxNumPlayers})... </h4>
+                
+              </div>
+            }
+            
+            {gameState.isFinished && 
+              <div className='tableMessage'>
+                <h4>Game Over</h4>
+                <h4>{winnerName === '' ? 'No Winner' : winnerName + ' wins!'}</h4>
+              </div>
+            }
           </div>
         </div>
 
@@ -101,6 +171,7 @@ export function GameTable() {
             </div>
           ))}
         </div>
+
       </div>
       
       

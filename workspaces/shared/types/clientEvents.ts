@@ -9,5 +9,7 @@ export enum ClientEvents
   LobbyLeave = 'client.lobby.leave',
 
   // Game
+  GameStartEarly = 'client.game.startearly',
   GameUpdate = 'client.game.update',
+  GameChatMessage = 'client.game.chatmessage',
 }

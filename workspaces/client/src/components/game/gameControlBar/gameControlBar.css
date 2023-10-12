@@ -4,6 +4,7 @@ div#controlBar {
   justify-content: space-between;
   align-items: flex-end;
   padding: 10px;
+  height: 80px;
   background-color: var(--darkgray);
 }
 
@@ -17,13 +18,25 @@ div#gameButtons {
 
 }
 
-div#gameButtons > button {
+div#gameButtons button {
   height: 50px;
   width: 45%;
   border: none;
   border-radius: 10px;
   font-weight: bold;
   font-size: 16px;
+  color: var(--white);
+}
+
+button#startgame {
+  align-self: flex-end;
+  height: 50px;
+  width: 25%;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: var(--blue3);
   color: var(--white);
 }
 

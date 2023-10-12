@@ -6,8 +6,6 @@ div#tableOuter {
   padding: 10px;
 
   background-color: var(--darkgray);
-
-  
 }
 
 div#tableWithPlayers {
@@ -35,6 +33,35 @@ div#tablePlayers {
   left: 0px;
 }
 
+div#menu {
+  width: 150px;
+  height: 0px;
+  position: absolute;
+  top: 80px;
+  left: 0px;
+
+  z-index: 2;
+
+  padding-left: 10px;
+}
+
+div#menuInner {
+  width: 150px;
+  height: 100px;
+  /* background-color: var(--black); */
+}
+
+button#leave {
+  width: 150px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--pink1);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: bold;
+}
+
 div#pigInfo {
   width: 160px;
   height: 110px;
@@ -49,6 +76,22 @@ div#pigInfo {
   align-items: center;
   padding-bottom: 5px;
   /* gap: 10px; */
+}
+
+div.tableMessage {
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#roomName {
+  align-self: flex-end;
 }
 
 div#pigs {

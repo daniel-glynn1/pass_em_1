@@ -45,10 +45,12 @@ export class GameState
 
     this.initializePlayers();
 
-    this.lobby.dispatchToLobby(ServerEvents.GameStarted, {});
+    // this.lobby.dispatchToLobby(ServerEvents.GameStarted, {});
+    console.log("sending game started message");
     this.lobby.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
-      color: 'blue',
-      message: 'Game started !',
+      senderCode: 100,
+      senderName: '',
+      message: 'Game started!',
     });
 
     this.lobby.dispatchLobbyState();
@@ -69,8 +71,9 @@ export class GameState
     this.isFinished = true;
 
     this.lobby.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
-      color: 'blue',
-      message: 'Game finished !',
+      senderCode: 100,
+      senderName: '',
+      message: 'Game finished!',
     });
 
     this.lobby.dispatchLobbyState();
@@ -201,7 +204,6 @@ export class GameState
     const nextIndex = (currentIndex + 1) % keys.length;
     return keys[nextIndex];
   }
-
 
 
 }
