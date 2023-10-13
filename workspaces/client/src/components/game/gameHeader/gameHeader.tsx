@@ -1,7 +1,7 @@
 import socketService from '../../../services/socketService';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { CurrentLobbyState } from '../recoilTypes';
-import { ShowMenuState } from '../recoilTypes';
+import { CurrentLobbyState } from '../../recoilTypes';
+import { ShowMenuState } from '../../recoilTypes';
 import menu from '../../../assets/menu.png';
 import x from '../../../assets/x.png';
 import './gameHeader.css';

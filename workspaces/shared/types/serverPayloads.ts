@@ -10,12 +10,16 @@ export type ServerPayloads = {
     isFinished: boolean;
     numPlayers: number;
     maxNumPlayers: number;
+    isRebuttal: boolean;
+    isFinalTurn: boolean;
+    finalScore: number;
     currentPigIndex1: number;
     currentPigIndex2: number;
     currentRollScore: number;
     currentTurnPlayer: string;
     currentTurnScore: number;
     scores: Record<string, Player>;
+    winnerId: string;
   };
 
   [ServerEvents.GameMessage]: {

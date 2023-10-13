@@ -6,7 +6,7 @@ import { SocketExceptions } from "../shared/types/socketExceptions";
 
 class GameService {
   // join/create
-  public async createGameRoom(socket: Socket, roomId: string, userName: string, numPlayers: number): Promise<boolean> {
+  public async createGameRoom(socket: Socket, roomId: string, userName: string, numPlayers: number, finalScore: number, isRebuttal: boolean): Promise<boolean> {
     return new Promise((rs, rj) => {
       const handleLobbyCreated = () => {
         rs(true);
@@ -20,7 +20,7 @@ class GameService {
         socket.off(SocketExceptions.LobbyError, handleLobbyError);
       };
   
-      socket.emit(ClientEvents.LobbyCreate, { roomId: roomId, userName: userName, numPlayers: numPlayers });
+      socket.emit(ClientEvents.LobbyCreate, { roomId: roomId, userName: userName, numPlayers: numPlayers, finalScore: finalScore, isRebuttal: isRebuttal });
   
       socket.on(ServerEvents.LobbyCreated, handleLobbyCreated);
       socket.on(SocketExceptions.LobbyError, handleLobbyError);

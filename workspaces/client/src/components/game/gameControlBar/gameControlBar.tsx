@@ -1,13 +1,16 @@
-import { useRecoilValue } from 'recoil';
-import { CurrentLobbyState } from '../recoilTypes';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { CurrentLobbyState, NumPlayersState } from '../../recoilTypes';
 import gameService from '../../../services/gameService';
 import socketService from '../../../services/socketService';
+
 import './gameControlBar.css';
 
 
 
 export function GameControlBar() {
   const gameState = useRecoilValue(CurrentLobbyState)!;
+  const [numPlayersState, setNumPlayersState] = useRecoilState(NumPlayersState);
+
   let isMyTurn = gameState.isStarted && socketService.socket && gameState.currentTurnPlayer === socketService.socket.id;
   let addedScore = gameState.isStarted ? gameState.scores[gameState.currentTurnPlayer].score + gameState.currentTurnScore : 0;
 
@@ -24,6 +27,7 @@ export function GameControlBar() {
   const handleStartGameButton = () => {
     if (socketService.socket)
       gameService.startGameEarly(socketService.socket);
+
   }
 
   return (

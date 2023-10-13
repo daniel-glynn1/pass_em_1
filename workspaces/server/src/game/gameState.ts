@@ -13,12 +13,16 @@ export class GameState
   public isFinished: boolean = false;
   public numPlayers: number = 0;
   public maxNumPlayers: number = 0;
+  public isRebuttal: boolean = false;
+  public isFinalTurn: boolean = false;
+  public finalScore: number = 100;
   public currentPigIndex1: number = 0;
   public currentPigIndex2: number = 0;
   public currentRollScore: number = 0;
   public currentTurnPlayer: Socket['id'] = '';
   public currentTurnScore: number = 0;
   public scores: Record<Socket['id'], Player> = {};
+  public winnerId: Socket['id'] = '';
 
   private pigScoreMap: Map<number, number> = new Map<number, number>([
     [0, 0],
@@ -33,6 +37,10 @@ export class GameState
     private readonly lobby: Lobby,
   )
   {
+    this.maxNumPlayers = lobby.maxClients;
+    this.isRebuttal = lobby.isRebuttal;
+    this.finalScore = lobby.finalScore;
+
   }
 
   public triggerStart(): void
@@ -45,8 +53,6 @@ export class GameState
 
     this.initializePlayers();
 
-    // this.lobby.dispatchToLobby(ServerEvents.GameStarted, {});
-    console.log("sending game started message");
     this.lobby.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
       senderCode: 100,
       senderName: '',
@@ -106,6 +112,12 @@ export class GameState
     if (isPigOut) {
       this.currentTurnScore = 0;
       this.currentTurnPlayer = this.getNextPlayer();
+
+      // looped back to player who first won, game is now over
+      if (this.isRebuttal && this.isFinalTurn && this.currentTurnPlayer === this.winnerId) { 
+        this.triggerFinish();
+      }
+
     } else {
       this.currentTurnScore += rollScore;
     }
@@ -121,7 +133,7 @@ export class GameState
     }
 
     // ignore if request is not from player whose turn it is
-    if (this.currentTurnPlayer != client.id) {
+    if (this.currentTurnPlayer !== client.id) {
       return;
     }
 
@@ -129,12 +141,34 @@ export class GameState
     this.scores[this.currentTurnPlayer].score += this.currentTurnScore;
 
     // check for win
-    if (this.scores[this.currentTurnPlayer].score >= 100) {
-      this.triggerFinish();
+    var isWinner: boolean = false;
+    if (this.scores[this.currentTurnPlayer].score >= this.finalScore) {
+      this.winnerId = this.currentTurnPlayer;
+      if (this.isRebuttal) {
+        this.lobby.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
+          senderCode: 100,
+          senderName: '',
+          message: 'Final turn!',
+        });
+        this.isFinalTurn = true;
+        this.finalScore = this.scores[this.currentTurnPlayer].score + 1;
+      } else {
+        isWinner = true;
+      }
+      
     }
 
     this.currentTurnScore = 0;
     this.currentTurnPlayer = this.getNextPlayer();
+
+    // looped back to player who first won, game is now over
+    if (this.isRebuttal && this.isFinalTurn && this.currentTurnPlayer === this.winnerId) { 
+      isWinner = true;
+    }
+
+    if (isWinner) {
+      this.triggerFinish();
+    }
 
     // send game state to lobby
     this.lobby.dispatchLobbyState();

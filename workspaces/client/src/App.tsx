@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import './App.css';
 import socketService from './services/socketService';
-import { JoinRoom } from './components/joinRoom/joinRoom';
+import { JoinRoom } from './components/joinRoom/joinRoom/joinRoom';
 import { Game } from './components/game/game/game';
 import gameService from './services/gameService';
-import { ChatState, CurrentLobbyState } from './components/game/recoilTypes';
+import { ChatState, CurrentLobbyState } from './components/recoilTypes';
 import { ServerEvents } from './shared/types/serverEvents';
 import { ServerPayloads } from './shared/types/serverPayloads';
 

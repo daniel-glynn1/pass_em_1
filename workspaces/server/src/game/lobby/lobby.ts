@@ -22,6 +22,9 @@ export class Lobby
     private readonly server: Server,
     public readonly name: string,
     public maxClients: number,
+    public readonly finalScore: number,
+    public readonly isRebuttal: boolean,
+
   )
   {
   }
@@ -38,8 +41,6 @@ export class Lobby
       score: 0
     };
     this.gameState.scores[client.id] = newPlayer;
-
-    this.gameState.maxNumPlayers = this.maxClients;
 
     this.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
       senderCode: 100,
@@ -108,12 +109,16 @@ export class Lobby
       isFinished: this.gameState.isFinished,
       numPlayers: this.clients.size,
       maxNumPlayers: this.gameState.maxNumPlayers,
+      isRebuttal: this.gameState.isRebuttal,
+      isFinalTurn: this.gameState.isFinalTurn,
+      finalScore: this.gameState.finalScore,
       currentPigIndex1: this.gameState.currentPigIndex1,
       currentPigIndex2: this.gameState.currentPigIndex2,
       currentRollScore: this.gameState.currentRollScore,
       currentTurnPlayer: this.gameState.currentTurnPlayer,
       currentTurnScore: this.gameState.currentTurnScore,
       scores: this.gameState.scores,
+      winnerId: this.gameState.winnerId,
     };
 
     this.dispatchToLobby(ServerEvents.LobbyState, payload);

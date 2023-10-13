@@ -1,6 +1,6 @@
 import './gameChat.css';
 import { useRecoilValue } from 'recoil';
-import { ChatState, CurrentLobbyState } from '../recoilTypes';
+import { ChatState, CurrentLobbyState } from '../../recoilTypes';
 import { useState, useRef, useEffect } from 'react';
 import socketService from "../../../services/socketService";
 import gameService from "../../../services/gameService";

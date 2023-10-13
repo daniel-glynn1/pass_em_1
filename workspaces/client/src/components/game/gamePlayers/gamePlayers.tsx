@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { CurrentLobbyState } from '../recoilTypes';
+import { CurrentLobbyState } from '../../recoilTypes';
 import './gamePlayers.css';
 
 

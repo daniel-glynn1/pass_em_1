@@ -1,0 +1,57 @@
+div#menu {
+  width: 170px;
+  height: 0px;
+  position: absolute;
+  top: 60px;
+  left: 0px;
+
+  z-index: 2;
+
+}
+
+div#menuInner {
+  width: 150px;
+  /* height: 200px; */
+  border-radius: 10px;
+  padding: 10px;
+  background-color: var(--black);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+
+
+button#leave {
+  width: 150px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--pink1);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+div#gameOptions {
+  width: 140px;
+  height: 70px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--gray);
+  color: var(--white);
+  font-size: 16px;
+  padding: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+div#gameOptions p {
+  margin: 0;
+}

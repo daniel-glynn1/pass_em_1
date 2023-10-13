@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { ShowMenuState, ChatState } from '../recoilTypes';
+import { ShowMenuState, ChatState } from '../../recoilTypes';
 import { GameRoom } from '../gameRoom/gameRoom';
 import './game.css';
 

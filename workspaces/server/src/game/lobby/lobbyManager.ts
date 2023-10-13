@@ -27,7 +27,7 @@ export class LobbyManager
     client.data.lobby = null;
   }
 
-  public createLobby(lobbyName: string, client: AuthenticatedSocket, maxClients: number): Lobby | null
+  public createLobby(lobbyName: string, client: AuthenticatedSocket, maxClients: number, finalScore: number, isRebuttal: boolean): Lobby | null
   {
     const prevLobby = this.lobbies.get(lobbyName);
 
@@ -38,7 +38,7 @@ export class LobbyManager
       return null;
     }
 
-    const lobby = new Lobby(this.server, lobbyName, maxClients);
+    const lobby = new Lobby(this.server, lobbyName, maxClients, finalScore, isRebuttal);
     this.lobbies.set(lobbyName, lobby);
 
     console.log("lobby created: ", lobbyName);

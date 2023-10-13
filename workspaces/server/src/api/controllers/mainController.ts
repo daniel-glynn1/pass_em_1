@@ -44,7 +44,7 @@ export class MainController {
   public async createLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
     console.log(client.id, " is creating lobby with name: ", message.roomId);
 
-    const lobby = this.lobbyManager.createLobby(message.roomId, client, message.numPlayers);
+    const lobby = this.lobbyManager.createLobby(message.roomId, client, message.numPlayers, message.finalScore, message.isRebuttal);
 
     if (!lobby) {
       return;

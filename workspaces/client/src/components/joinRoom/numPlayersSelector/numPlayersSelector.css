@@ -1,0 +1,43 @@
+div#numPlayerOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  border-radius: 8px;
+  padding: 3px;
+  background-color: var(--white);
+  width: fit-content;
+
+}
+
+#numPlayersText {
+  margin: 10px;
+}
+
+button.playerOption {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button.playerOption p {
+  font-size: 14px;
+  font-weight: bold;
+
+}
+
+button#selected {
+  background-color: var(--blue1);
+  color: var(--white);
+}
+
+button#unselected {
+  background-color: var(--white);
+  color: var(--blue1);
+}
