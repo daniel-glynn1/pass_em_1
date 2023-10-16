@@ -14,7 +14,7 @@ export function GameControlBar() {
 
   let isRolling = isRolling1 || isRolling2;
   let isMyTurn = gameState.isStarted && socketService.socket && gameState.currentTurnPlayer === socketService.socket.id;
-  let addedScore = gameState.isStarted ? gameState.scores[gameState.currentTurnPlayer].score + gameState.currentTurnScore : 0;
+  let addedScore = gameState.isStarted && gameState.scores[gameState.currentTurnPlayer] ? gameState.scores[gameState.currentTurnPlayer].score + gameState.currentTurnScore : 0;
   let isCreator = socketService.socket && gameState.creatorId === socketService.socket.id;
 
   const handleRollButton = () => {
@@ -82,10 +82,12 @@ export function GameControlBar() {
           
           {isMyTurn ? 
             <h4 id={isMyTurn ? 'myTurn' : 'notMyTurn'}>Your turn</h4> :
-            <h4>{gameState.scores[gameState.currentTurnPlayer].name}'s turn</h4>
+            gameState.scores[gameState.currentTurnPlayer] ?
+            <h4>{gameState.scores[gameState.currentTurnPlayer].name}'s turn</h4> :
+            <h4></h4>
           }
           <p>Turn score: {gameState.currentTurnScore}</p>
-          <p>Total score: {gameState.scores[gameState.currentTurnPlayer].score} ({addedScore})</p>
+          <p>Total score: {gameState.scores[gameState.currentTurnPlayer] ? gameState.scores[gameState.currentTurnPlayer].score : 0} ({addedScore})</p>
         </div>
       }
     </div>

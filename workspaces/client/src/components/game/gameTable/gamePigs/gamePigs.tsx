@@ -98,7 +98,6 @@ export function GamePigs() {
   }
 
   let rollName: string = determineRollName(gameState.currentPigIndex1, gameState.currentPigIndex2);
-  let winnerName: string = gameState.isFinished && gameState.scores[gameState.winnerId] ? gameState.scores[gameState.winnerId].name : '';
   let isRolling = isRolling1 || isRolling2;
 
 
@@ -130,7 +129,7 @@ export function GamePigs() {
 
   return (
     <div id="pigInfo">
-      {(gameState.isStarted && !gameState.isFinished) && 
+      {(gameState.isStarted) && 
         <div id="pigs">
           <img 
             className={`pigImage ${isRolling1 ? 'spin1' : isRolling2 ? ('spin2-' + gameState.currentPigIndex1) :''} ${'roll-' + gameState.currentPigIndex1}`} 
@@ -143,7 +142,7 @@ export function GamePigs() {
         </div>
       }
       
-      {(gameState.isStarted && !gameState.isFinished && !isRolling) && 
+      {(gameState.isStarted && !isRolling) && 
         <div id='pigScore'>
           <p id='rollName'>{rollName}</p>
           <p id='rollScore'>{gameState.currentRollScore}</p>
@@ -155,13 +154,6 @@ export function GamePigs() {
           <h4 id='roomName'>{gameState.lobbyName}</h4>
           <h4>Waiting for players to join ({gameState.numPlayers}/{gameState.maxNumPlayers})... </h4>
           
-        </div>
-      }
-      
-      {gameState.isFinished && 
-        <div className='tableMessage'>
-          <h4>Game Over</h4>
-          <h4>{winnerName === '' ? 'No Winner' : winnerName + ' wins!'}</h4>
         </div>
       }
     </div>

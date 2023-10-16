@@ -25,6 +25,8 @@ export class GameState
   public winnerId: Socket['id'] = '';
   public creatorId: Socket['id'] = '';
 
+  private tempWinnerId: Socket['id'] = '';
+
 
   private pigScoreMap: Map<number, number> = new Map<number, number>([
     [0, 0],
@@ -80,6 +82,21 @@ export class GameState
       senderCode: 100,
       senderName: '',
       message: 'Game finished!',
+    });
+
+    // change winner if rebuttal is on (may not be original winner)
+    if (this.isRebuttal) {
+      this.winnerId = this.tempWinnerId;
+    }
+
+    let gameOverMessage = this.scores[this.winnerId] ? 
+      this.scores[this.winnerId].name + ' wins!' : 
+      'No winner';
+
+    this.lobby.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
+      senderCode: 100,
+      senderName: '',
+      message: gameOverMessage,
     });
 
     this.lobby.dispatchLobbyState();
@@ -170,19 +187,23 @@ export class GameState
     // check for win
     var isWinner: boolean = false;
     if (this.scores[this.currentTurnPlayer].score >= this.finalScore) {
-      this.winnerId = this.currentTurnPlayer;
       if (this.isRebuttal) {
-        this.lobby.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
-          senderCode: 100,
-          senderName: '',
-          message: 'Final turn!',
-        });
-        this.isFinalTurn = true;
         this.finalScore = this.scores[this.currentTurnPlayer].score + 1;
+        this.tempWinnerId = this.currentTurnPlayer;
+        if (!this.isFinalTurn) {
+          this.winnerId = this.currentTurnPlayer;
+          this.lobby.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
+            senderCode: 100,
+            senderName: '',
+            message: 'Final turn!',
+          });
+          this.isFinalTurn = true;
+        }
+          
       } else {
+        this.winnerId = this.currentTurnPlayer;
         isWinner = true;
       }
-      
     }
 
     this.currentTurnScore = 0;

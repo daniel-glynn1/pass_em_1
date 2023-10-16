@@ -1,8 +1,40 @@
 div#rebuttalOuter {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
 
+}
+
+div#rebuttalTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 0px;
+}
+
+#rebuttalText {
+  margin: 10px;
+}
+
+div#rebuttalExplanation {
+  margin-top: 10px;
+}
+
+div#rebuttalExplanation p {
+  margin: 0px;
+  font-size: 12px;
+  color: var(--blue5);
+}
+
+button#explanationButton {
+  width: 20px;
+  height: 20px;
+  background-color: var(--blue5);
+  color: var(--darkgray);
+  border-radius: 10px;
+  font-weight: bold;
 }
 
 div#rebuttalOptions {
@@ -16,10 +48,6 @@ div#rebuttalOptions {
   background-color: var(--white);
   width: fit-content;
 
-}
-
-#rebuttalText {
-  margin: 10px;
 }
 
 button.rebuttalOption {
