@@ -51,7 +51,6 @@ div.playerScoreTurn p {
   text-overflow: ellipsis;
 
   font-weight: bold;
-  color: var(--blue5);
 }
 
 p.scoreText {

@@ -1,5 +1,5 @@
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { CurrentLobbyState, NumPlayersState } from '../../recoilTypes';
+import { CurrentLobbyState, Rolling1State, Rolling2State } from '../../recoilTypes';
 import gameService from '../../../services/gameService';
 import socketService from '../../../services/socketService';
 
@@ -9,14 +9,30 @@ import './gameControlBar.css';
 
 export function GameControlBar() {
   const gameState = useRecoilValue(CurrentLobbyState)!;
-  const [numPlayersState, setNumPlayersState] = useRecoilState(NumPlayersState);
+  const [isRolling1, setIsRolling1] = useRecoilState(Rolling1State);
+  const [isRolling2, setIsRolling2] = useRecoilState(Rolling2State);
 
+  let isRolling = isRolling1 || isRolling2;
   let isMyTurn = gameState.isStarted && socketService.socket && gameState.currentTurnPlayer === socketService.socket.id;
   let addedScore = gameState.isStarted ? gameState.scores[gameState.currentTurnPlayer].score + gameState.currentTurnScore : 0;
+  let isCreator = socketService.socket && gameState.creatorId === socketService.socket.id;
 
   const handleRollButton = () => {
-    if (socketService.socket)
-      gameService.updateGame(socketService.socket, 'roll');
+    setIsRolling1(true);
+
+    // roll animation for 2 seconds
+    setTimeout(() => {
+      if (socketService.socket)
+        gameService.updateGame(socketService.socket, 'roll');
+      setIsRolling1(false);
+
+      setIsRolling2(true);
+      setTimeout(() => {
+        setIsRolling2(false);
+      }, 750);
+
+    }, 2000);
+    
   }
 
   const handlePassButton = () => {
@@ -27,27 +43,41 @@ export function GameControlBar() {
   const handleStartGameButton = () => {
     if (socketService.socket)
       gameService.startGameEarly(socketService.socket);
-
   }
+
+  const handleRestartGameButton = () => {
+    if (socketService.socket)
+      gameService.restartGame(socketService.socket);
+  }
+
+  
 
   return (
     <div id='controlBar'>
       <div id='gameButtons'>
         <button id='passButton'
           onClick={() => handlePassButton()} 
-          disabled={!gameState.isStarted || gameState.isFinished || !isMyTurn}
+          disabled={!gameState.isStarted || gameState.isFinished || !isMyTurn || isRolling}
         >
           Pass
         </button>
         <button id='rollButton'
           onClick={() => handleRollButton()} 
-          disabled={!gameState.isStarted || gameState.isFinished || !isMyTurn}
+          disabled={!gameState.isStarted || gameState.isFinished || !isMyTurn || isRolling}
         >
           Roll
         </button>
       </div>
 
-      {gameState.isStarted ? (
+      {(!gameState.isStarted && gameState.numPlayers > 1 && isCreator) &&
+        <button className='startgame' onClick={() => handleStartGameButton()} >Start Game Now</button>
+      }
+
+      {(gameState.isFinished && gameState.numPlayers > 1 && isCreator) &&
+        <button className='startgame' onClick={() => handleRestartGameButton()} >Play Again</button>
+      }
+
+      {(gameState.isStarted && !gameState.isFinished) &&
         <div id='turnInfo'>
           
           {isMyTurn ? 
@@ -57,11 +87,7 @@ export function GameControlBar() {
           <p>Turn score: {gameState.currentTurnScore}</p>
           <p>Total score: {gameState.scores[gameState.currentTurnPlayer].score} ({addedScore})</p>
         </div>
-      ) : (
-        gameState.numPlayers > 1 &&
-          <button id='startgame' onClick={() => handleStartGameButton()} >Start Game Now</button>
-
-      )}
+      }
     </div>
   );
 }

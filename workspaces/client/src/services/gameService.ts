@@ -80,6 +80,10 @@ class GameService {
     socket.emit(ClientEvents.GameStartEarly);
   }
 
+  public async restartGame(socket: Socket) {
+    socket.emit(ClientEvents.GameRestart);
+  }
+
   public async sendChatMessage(socket: Socket, message: string, senderName: string, senderCode: number) {
     let chatMessage: ServerPayloads[ServerEvents.GameMessage] = {
       message: message,

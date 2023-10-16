@@ -68,17 +68,9 @@ export class MainController {
   @OnMessage(ClientEvents.LobbyLeave)
   public async leaveLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
     console.log("User leaving room: ", client.id);
-    client.data.lobby?.removeClient(client);
-    
-    // remove lobby if game has ended
-    if (client.data.lobby.gameState.isFinished) {
-      this.lobbyManager.deleteLobby(client.data.lobby.name);
-    }
-
-    client.data.lobby = null;
+    this.lobbyManager.terminateSocket(client);
 
     client.emit(ServerEvents.LobbyLeft);
-
   }
 
   @OnMessage(ClientEvents.GameStartEarly)
@@ -91,6 +83,19 @@ export class MainController {
       });
     }
     client.data.lobby?.startGameEarly(client);
+  }
+
+  @OnMessage(ClientEvents.GameRestart)
+  public async restartGame(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
+    console.log(client.id, " is restarting game");
+
+    if (!client.data.lobby) {
+      client.emit(SocketExceptions.LobbyError, {
+        error: "You are not in a lobby!"
+      });
+    }
+
+    client.data.lobby?.restartGame(client);
   }
 
   @OnMessage(ClientEvents.GameChatMessage)

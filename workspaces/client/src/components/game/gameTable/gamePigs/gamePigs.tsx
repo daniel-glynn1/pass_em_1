@@ -1,6 +1,7 @@
-import { useRecoilValue } from 'recoil';
-import { CurrentLobbyState } from '../../../recoilTypes';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { CurrentLobbyState, Rolling1State, Rolling2State } from '../../../recoilTypes';
 import './gamePigs.css';
+import { useState, useEffect } from 'react';
 
 const pigImages = [
   require('../../../../assets/pigs/pig0.png'),
@@ -14,6 +15,11 @@ const pigImages = [
 
 export function GamePigs() {
   const gameState = useRecoilValue(CurrentLobbyState)!;
+  const [isRolling1, setIsRolling1] = useRecoilState(Rolling1State);
+  const [isRolling2, setIsRolling2] = useRecoilState(Rolling2State);
+  const [pig1RollIndex, setPig1RollIndex] = useState(0);
+  const [pig2RollIndex, setPig2RollIndex] = useState(0);
+
 
   const pigNameMap: Map<number, string> = new Map<number, string>([
     [0, ''],
@@ -58,19 +64,86 @@ export function GamePigs() {
 
   }
 
+  const getPig1Index = (): number => {
+    if (isRolling1) {
+      return pig1RollIndex;
+    } else {
+      return gameState.currentPigIndex1;
+    }
+  }
+
+  const getPig2Index = (): number => {
+    if (isRolling1) {
+      return pig2RollIndex;
+    } else {
+      return gameState.currentPigIndex2;
+    }
+  }
+
+  const getRandomPig = (): number => {
+    let num = Math.floor(Math.random() * 1000);
+    if (num < 5) {                                  // 0.5% Jowler
+      return 5;
+    } else if (num < 5 + 25) {                      // 2.5% Snouter 
+      return 4;
+    } else if (num < 5 + 25 + 100) {                // 10.0% Trotter
+      return 3;
+    } else if (num < 5 + 25 + 100 + 200) {          // 20.0% Razorback
+      return 2;
+    } else if (num < 5 + 25 + 100 + 200 + 350) {    // 35.0% Side dot up
+      return 1;
+    } else {                                        // 32.0% Side dot down
+      return 0; 
+    }
+  }
+
   let rollName: string = determineRollName(gameState.currentPigIndex1, gameState.currentPigIndex2);
   let winnerName: string = gameState.isFinished && gameState.scores[gameState.winnerId] ? gameState.scores[gameState.winnerId].name : '';
+  let isRolling = isRolling1 || isRolling2;
+
+
+  useEffect(() => {
+    let interval;
+    if (isRolling1) {
+      const totalRollTime = 2000; // Total spinning time (2 seconds)
+      let elapsedTime = 0;
+      let imageSwitchInterval = 50; 
+
+      const switchImage = () => {
+        setPig1RollIndex(getRandomPig());
+        setPig2RollIndex(getRandomPig());
+        elapsedTime += imageSwitchInterval;
+
+        if (elapsedTime < totalRollTime - 200) {
+          imageSwitchInterval += 50;
+          setTimeout(switchImage, imageSwitchInterval);
+        }
+      };
+
+      setTimeout(switchImage, imageSwitchInterval);
+
+    } 
+
+
+  }, [isRolling1]);
+ 
 
   return (
     <div id="pigInfo">
       {(gameState.isStarted && !gameState.isFinished) && 
         <div id="pigs">
-          <img src={pigImages[gameState.currentPigIndex1]}></img>
-          <img src={pigImages[gameState.currentPigIndex2]}></img>
+          <img 
+            className={`pigImage ${isRolling1 ? 'spin1' : isRolling2 ? ('spin2-' + gameState.currentPigIndex1) :''} ${'roll-' + gameState.currentPigIndex1}`} 
+            src={pigImages[getPig1Index()]}>
+          </img>
+          <img 
+            className={`pigImage ${isRolling1 ? 'spin1' : isRolling2 ? ('spin2-' + gameState.currentPigIndex2) :''} ${'roll-' + gameState.currentPigIndex2}`} 
+            src={pigImages[getPig2Index()]}>
+          </img>
         </div>
       }
       
-      {(gameState.isStarted && !gameState.isFinished) && 
+      {(gameState.isStarted && !gameState.isFinished && !isRolling) && 
         <div id='pigScore'>
           <p id='rollName'>{rollName}</p>
           <p id='rollScore'>{gameState.currentRollScore}</p>

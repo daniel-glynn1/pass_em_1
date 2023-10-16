@@ -10,6 +10,7 @@ export enum ClientEvents
 
   // Game
   GameStartEarly = 'client.game.startearly',
+  GameRestart = 'client.game.restart',
   GameUpdate = 'client.game.update',
   GameChatMessage = 'client.game.chatmessage',
 }

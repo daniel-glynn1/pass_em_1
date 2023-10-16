@@ -12,6 +12,11 @@ export const ShowMenuState = atom<boolean>({
   default: false,
 });
 
+export const UserNameState = atom<string>({
+  key: 'UserNameState',
+  default: '',
+});
+
 export const ChatState = atom<ServerPayloads[ServerEvents.GameMessage][]>({
   key: 'ChatState',
   default: [],
@@ -29,5 +34,15 @@ export const NumPlayersState = atom<number>({
 
 export const RebuttalState = atom<boolean>({
   key: 'RebuttalState',
+  default: false,
+});
+
+export const Rolling1State = atom<boolean>({
+  key: 'Rolling1State',
+  default: false,
+});
+
+export const Rolling2State = atom<boolean>({
+  key: 'Rolling2State',
   default: false,
 });

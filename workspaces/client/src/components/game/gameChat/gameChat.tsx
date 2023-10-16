@@ -64,7 +64,7 @@ export function GameChat() {
       <h4 id='chatTitle'>Chat</h4>
       <div id='chatList'>
         {chatState.map((item, index) => (
-          <div className='chatMessage'>
+          <div key={index} className='chatMessage'>
             {item.senderCode !== 100 && 
               <p className='chatName'>{item.senderName}</p>
             }

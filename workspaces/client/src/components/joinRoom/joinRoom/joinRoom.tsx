@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import socketService from "../../../services/socketService";
 import gameService from "../../../services/gameService";
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
 import './joinRoom.css';
 import { FinalScoreSelector } from "../finalScoreSelector/finalScoreSelector";
 import { NumPlayersSelector } from "../numPlayersSelector/numPlayersSelector";
-import { FinalScoreState, NumPlayersState, RebuttalState } from "../../recoilTypes";
+import { FinalScoreState, NumPlayersState, RebuttalState, UserNameState } from "../../recoilTypes";
 import { RebuttalSelector } from "../rebuttalSelector/rebuttalSelector";
 
 interface IJoinRoomProps {}
 
 export function JoinRoom(props: IJoinRoomProps) {
   const [roomName, setRoomName] = useState("");
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useRecoilState(UserNameState);
 
   const numPlayers = useRecoilValue(NumPlayersState)!;
   const finalScore = useRecoilValue(FinalScoreState)!;

@@ -35,11 +35,10 @@ div#pigs {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  padding-top: 10px;
 }
 
-div#pigs img {
-  width: 60px;
-}
+
 
 div#pigScore {
   width: 90%;
@@ -62,3 +61,111 @@ p#rollScore {
   align-self: flex-end;
   margin: 0;
 }
+
+.pigImage {
+  width: 60px;
+  /* transition: transform 3s ease; */
+}
+
+.spin1 {
+  animation: spin-animation 2s linear 1;
+}
+
+
+.spin2-0 {
+  animation: spin-animation45 0.125s ease-out 1;
+}
+.roll-0 {
+  transform: rotate(-45deg);
+}
+
+.spin2-1 {
+  animation: spin-animation225 0.625s ease-out 1;
+}
+.roll-1 {
+  transform: rotate(-225deg);
+}
+
+.spin2-2 {
+  animation: spin-animation180 0.5s ease-out 1;
+}
+.roll-2 {
+  transform: rotate(-180deg);
+}
+
+.spin2-3 {
+  animation: none;
+}
+.roll-3 {
+  transform: rotate(0deg);
+}
+
+.spin2-4 {
+  animation: spin-animation90 0.25s ease-out 1;
+}
+.roll-4 {
+  transform: rotate(-90deg);
+}
+
+.spin2-5 {
+  animation: spin-animation135 0.375s ease-out 1;
+}
+.roll-5 {
+  transform: rotate(-135deg);
+}
+
+@keyframes spin-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-1800deg);
+  }
+}
+
+@keyframes spin-animation45 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+}
+
+@keyframes spin-animation90 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+
+@keyframes spin-animation135 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-135deg);
+  }
+}
+
+@keyframes spin-animation180 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-180deg);
+  }
+}
+
+@keyframes spin-animation225 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-225deg);
+  }
+}
+
+

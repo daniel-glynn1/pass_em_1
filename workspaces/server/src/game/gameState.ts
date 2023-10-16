@@ -23,6 +23,8 @@ export class GameState
   public currentTurnScore: number = 0;
   public scores: Record<Socket['id'], Player> = {};
   public winnerId: Socket['id'] = '';
+  public creatorId: Socket['id'] = '';
+
 
   private pigScoreMap: Map<number, number> = new Map<number, number>([
     [0, 0],
@@ -38,9 +40,7 @@ export class GameState
   )
   {
     this.maxNumPlayers = lobby.maxClients;
-    this.isRebuttal = lobby.isRebuttal;
     this.finalScore = lobby.finalScore;
-
   }
 
   public triggerStart(): void
@@ -83,6 +83,33 @@ export class GameState
     });
 
     this.lobby.dispatchLobbyState();
+  }
+
+  public restartGame(client: AuthenticatedSocket): void {
+    console.log("restarting game...");
+
+    // only restart if game has finished
+    if (!this.isFinished) {
+      return;
+    }
+
+    // reset all game state properties
+    this.isStarted = false;
+    this.isFinished = false;
+    this.isFinalTurn = false;
+    this.finalScore = this.lobby.finalScore;
+    this.currentPigIndex1 = 0;
+    this.currentPigIndex2 = 0;
+    this.currentRollScore = 0;
+    this.currentTurnScore = 0;
+    this.winnerId = '';
+
+    // reset each player's score to 0
+    for (const key in this.scores) {
+      this.scores[key].score = 0;
+    }
+
+    this.triggerStart();
   }
 
   public rollPigs(client: AuthenticatedSocket): void

@@ -20,6 +20,7 @@ export type ServerPayloads = {
     currentTurnScore: number;
     scores: Record<string, Player>;
     winnerId: string;
+    creatorId: string;
   };
 
   [ServerEvents.GameMessage]: {

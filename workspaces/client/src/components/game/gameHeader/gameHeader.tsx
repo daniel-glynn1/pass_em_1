@@ -1,6 +1,5 @@
-import socketService from '../../../services/socketService';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { CurrentLobbyState } from '../../recoilTypes';
+import { UserNameState } from '../../recoilTypes';
 import { ShowMenuState } from '../../recoilTypes';
 import menu from '../../../assets/menu.png';
 import x from '../../../assets/x.png';
@@ -8,8 +7,9 @@ import './gameHeader.css';
 
 
 export function GameHeader() {
-  const gameState = useRecoilValue(CurrentLobbyState)!;
   const [isShowMenu, setShowMenu] = useRecoilState(ShowMenuState);
+  const userName = useRecoilValue(UserNameState);
+
 
   const handleMenuClick = () => {
     // Update the boolean value to true
@@ -26,7 +26,7 @@ export function GameHeader() {
         <h2>Pass 'Em</h2>
       </div>
       
-      <h3>{(socketService.socket && gameState !== null && gameState.scores[socketService.socket.id]) && gameState.scores[socketService.socket!.id].name}</h3>
+      <h3>{userName}</h3>
     </div>   
   );
 

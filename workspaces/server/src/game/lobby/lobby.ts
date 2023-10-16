@@ -23,7 +23,6 @@ export class Lobby
     public readonly name: string,
     public maxClients: number,
     public readonly finalScore: number,
-    public readonly isRebuttal: boolean,
 
   )
   {
@@ -61,6 +60,10 @@ export class Lobby
     this.clients.delete(client.id);
     client.leave(this.id);
 
+    if (this.clients.size === 0) {
+      return;
+    }
+
     // Alert the remaining players that client left lobby
     this.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
       senderCode: 100,
@@ -68,13 +71,18 @@ export class Lobby
       message: client.data.userName + ' left the game',
     });
 
-    if (this.gameState.isStarted || this.clients.size === 0) {
-      this.gameState.triggerFinish();
-    } else {
-      delete this.gameState.scores[client.id];
-    }
+    delete this.gameState.scores[client.id];
 
-    
+    if (this.gameState.isStarted) {
+      this.gameState.triggerFinish();
+    } 
+
+    // give creator to another player if necessary
+    if (client.id === this.gameState.creatorId) {
+      const firstClient = this.clients.entries().next().value;
+      const firstPlayer = firstClient[0];
+      this.gameState.creatorId = firstPlayer;
+    }
 
     this.dispatchLobbyState();
     
@@ -93,7 +101,21 @@ export class Lobby
     this.gameState.maxNumPlayers = this.clients.size;
 
     this.gameState.triggerStart();
-    this.dispatchLobbyState();
+  }
+
+  public restartGame(client: AuthenticatedSocket): void {
+    if (this.clients.size <= 1) {
+      if (!client.data.lobby) {
+        client.emit(SocketExceptions.LobbyError, {
+          error: "Can't start a game with only one player!"
+        });
+      }
+    }
+
+    this.maxClients = this.clients.size;
+    this.gameState.maxNumPlayers = this.clients.size;
+
+    this.gameState.restartGame(client);
   }
 
   public sendChatMessage(chatMessage: ServerPayloads[ServerEvents.GameMessage]): void {
@@ -119,6 +141,7 @@ export class Lobby
       currentTurnScore: this.gameState.currentTurnScore,
       scores: this.gameState.scores,
       winnerId: this.gameState.winnerId,
+      creatorId: this.gameState.creatorId,
     };
 
     this.dispatchToLobby(ServerEvents.LobbyState, payload);

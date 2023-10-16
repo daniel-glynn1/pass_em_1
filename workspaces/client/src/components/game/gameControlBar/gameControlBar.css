@@ -28,7 +28,7 @@ div#gameButtons button {
   color: var(--white);
 }
 
-button#startgame {
+button.startgame {
   align-self: flex-end;
   height: 50px;
   width: 25%;

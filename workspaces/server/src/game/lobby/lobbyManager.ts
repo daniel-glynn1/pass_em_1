@@ -18,8 +18,8 @@ export class LobbyManager
   {
     client.data.lobby?.removeClient(client);
     
-    // remove lobby if game has ended
-    if (client.data.lobby.gameState.isFinished) {
+    // remove lobby if everyone has left
+    if (client.data.lobby.clients.size === 0) {
       console.log("deleting lobby...")
       this.deleteLobby(client.data.lobby.name);
     }
@@ -38,8 +38,11 @@ export class LobbyManager
       return null;
     }
 
-    const lobby = new Lobby(this.server, lobbyName, maxClients, finalScore, isRebuttal);
+    const lobby = new Lobby(this.server, lobbyName, maxClients, finalScore);
     this.lobbies.set(lobbyName, lobby);
+
+    lobby.gameState.isRebuttal = isRebuttal;
+    lobby.gameState.creatorId = client.id;
 
     console.log("lobby created: ", lobbyName);
 
