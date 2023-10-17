@@ -13,6 +13,7 @@ interface IJoinRoomProps {}
 
 export function JoinRoom(props: IJoinRoomProps) {
   const [roomName, setRoomName] = useState("");
+  const [roomPassword, setRoomPassword] = useState("");
   const [userName, setUserName] = useRecoilState(UserNameState);
 
   const numPlayers = useRecoilValue(NumPlayersState)!;
@@ -23,23 +24,31 @@ export function JoinRoom(props: IJoinRoomProps) {
   const [isCreator, setCreator] = useState(true);
   const [isSelected, setSelected] = useState(false);
 
-  const handleRoomNameChange = (e: React.ChangeEvent<any>) => {
-    const value = e.target.value;
-    setRoomName(value);
-  }
-
   const handleUserNameChange = (e: React.ChangeEvent<any>) => {
     const value = e.target.value;
     setUserName(value);
   }
-
   const handleUserNameKeyDown = (e: React.KeyboardEvent<any>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
     }
   }
 
+  const handleRoomNameChange = (e: React.ChangeEvent<any>) => {
+    const value = e.target.value;
+    setRoomName(value);
+  }
   const handleRoomNameKeyDown = (e: React.KeyboardEvent<any>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  }
+
+  const handleRoomPasswordChange = (e: React.ChangeEvent<any>) => {
+    const value = e.target.value;
+    setRoomPassword(value);
+  }
+  const handleRoomPasswordKeyDown = (e: React.KeyboardEvent<any>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
     }
@@ -65,19 +74,23 @@ export function JoinRoom(props: IJoinRoomProps) {
       alert("Enter a room name!");
       return;
     }
+    if (!roomPassword || roomPassword.trim() === "") {
+      alert("Enter a password!");
+      return;
+    }
 
     setJoining(true);
 
     if (isCreator) {
       const joined = await gameService
-      .createGameRoom(socket, roomName, userName, numPlayers, finalScore, isRebuttal)
+      .createGameRoom(socket, roomName, roomPassword, userName, numPlayers, finalScore, isRebuttal)
       .catch((err) => {
         alert(err);
       });
 
     } else {
       const joined = await gameService
-      .joinGameRoom(socket, roomName, userName)
+      .joinGameRoom(socket, roomName, roomPassword, userName)
       .catch((err) => {
         alert(err);
       });
@@ -125,9 +138,13 @@ export function JoinRoom(props: IJoinRoomProps) {
             <button id='goback' onClick={() => setSelected(false)} disabled={isJoining}> 
               Go back
             </button>
-            <div id='roomInput'>
-              <p id='roomNameText'>Room Name:</p>
+            <div className='roomInput'>
+              <p className='roomNameText'>Room Name:</p>
               <input type="text" required maxLength={15} placeholder="Room Name" value={roomName} onChange={handleRoomNameChange} onKeyDown={handleRoomNameKeyDown}/>
+            </div>
+            <div className='roomInput'>
+              <p className='roomNameText'>Room Password:</p>
+              <input type="password" required maxLength={15} placeholder="Password" value={roomPassword} onChange={handleRoomPasswordChange} onKeyDown={handleRoomPasswordKeyDown}/>
             </div>
             {isCreator &&
               <div id='creationOptions'>

@@ -102,7 +102,6 @@ export function GamePigs() {
 
 
   useEffect(() => {
-    let interval;
     if (isRolling1) {
       const totalRollTime = 2000; // Total spinning time (2 seconds)
       let elapsedTime = 0;
@@ -133,11 +132,13 @@ export function GamePigs() {
         <div id="pigs">
           <img 
             className={`pigImage ${isRolling1 ? 'spin1' : isRolling2 ? ('spin2-' + gameState.currentPigIndex1) :''} ${'roll-' + gameState.currentPigIndex1}`} 
-            src={pigImages[getPig1Index()]}>
+            src={pigImages[getPig1Index()]}
+            alt={'pig' + getPig1Index()}>
           </img>
           <img 
             className={`pigImage ${isRolling1 ? 'spin1' : isRolling2 ? ('spin2-' + gameState.currentPigIndex2) :''} ${'roll-' + gameState.currentPigIndex2}`} 
-            src={pigImages[getPig2Index()]}>
+            src={pigImages[getPig2Index()]}
+            alt={'pig' + getPig1Index()}>
           </img>
         </div>
       }

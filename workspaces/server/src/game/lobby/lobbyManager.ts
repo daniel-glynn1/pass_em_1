@@ -27,7 +27,7 @@ export class LobbyManager
     client.data.lobby = null;
   }
 
-  public createLobby(lobbyName: string, client: AuthenticatedSocket, maxClients: number, finalScore: number, isRebuttal: boolean): Lobby | null
+  public createLobby(lobbyName: string, lobbyPassword: string, client: AuthenticatedSocket, maxClients: number, finalScore: number, isRebuttal: boolean): Lobby | null
   {
     const prevLobby = this.lobbies.get(lobbyName);
 
@@ -38,7 +38,7 @@ export class LobbyManager
       return null;
     }
 
-    const lobby = new Lobby(this.server, lobbyName, maxClients, finalScore);
+    const lobby = new Lobby(this.server, lobbyName, lobbyPassword, maxClients, finalScore);
     this.lobbies.set(lobbyName, lobby);
 
     lobby.gameState.isRebuttal = isRebuttal;
@@ -49,7 +49,7 @@ export class LobbyManager
     return lobby;
   }
 
-  public joinLobby(lobbyName: string, client: AuthenticatedSocket, userName: string): void
+  public joinLobby(lobbyName: string, lobbyPassword: string, client: AuthenticatedSocket, userName: string): void
   {
     const lobby = this.lobbies.get(lobbyName);
 
@@ -63,6 +63,13 @@ export class LobbyManager
     if (lobby.clients.size >= lobby.maxClients) {
       client.emit(SocketExceptions.LobbyError, {
         error: "Lobby is full"
+      });
+      return;
+    }
+
+    if (lobbyPassword !== lobby.password) {
+      client.emit(SocketExceptions.LobbyError, {
+        error: "Incorrect name/password"
       });
       return;
     }

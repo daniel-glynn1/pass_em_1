@@ -84,7 +84,7 @@ export function GameControlBar() {
             <h4 id={isMyTurn ? 'myTurn' : 'notMyTurn'}>Your turn</h4> :
             gameState.scores[gameState.currentTurnPlayer] ?
             <h4>{gameState.scores[gameState.currentTurnPlayer].name}'s turn</h4> :
-            <h4></h4>
+            ''
           }
           <p>Turn score: {gameState.currentTurnScore}</p>
           <p>Total score: {gameState.scores[gameState.currentTurnPlayer] ? gameState.scores[gameState.currentTurnPlayer].score : 0} ({addedScore})</p>

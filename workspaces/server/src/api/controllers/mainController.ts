@@ -44,7 +44,7 @@ export class MainController {
   public async createLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
     console.log(client.id, " is creating lobby with name: ", message.roomId);
 
-    const lobby = this.lobbyManager.createLobby(message.roomId, client, message.numPlayers, message.finalScore, message.isRebuttal);
+    const lobby = this.lobbyManager.createLobby(message.roomId, message.roomPassword, client, message.numPlayers, message.finalScore, message.isRebuttal);
 
     if (!lobby) {
       return;
@@ -60,7 +60,7 @@ export class MainController {
   public async joinLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
     console.log(client.id, " is joining lobby with name: ", message.roomId);
 
-    this.lobbyManager.joinLobby(message.roomId, client, message.userName);
+    this.lobbyManager.joinLobby(message.roomId, message.roomPassword, client, message.userName);
 
     client.emit(ServerEvents.LobbyJoined);
   }

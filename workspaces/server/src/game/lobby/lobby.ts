@@ -21,6 +21,7 @@ export class Lobby
   constructor(
     private readonly server: Server,
     public readonly name: string,
+    public readonly password: string,
     public maxClients: number,
     public readonly finalScore: number,
 
