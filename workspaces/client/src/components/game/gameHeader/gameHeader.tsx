@@ -1,19 +1,24 @@
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { UserNameState } from '../../recoilTypes';
+import { ShowRulesState, UserNameState } from '../../recoilTypes';
 import { ShowMenuState } from '../../recoilTypes';
 import menu from '../../../assets/menu.png';
 import x from '../../../assets/x.png';
+import passemlogo from '../../../assets/passemlogo.png';
 import './gameHeader.css';
 
 
 export function GameHeader() {
   const [isShowMenu, setShowMenu] = useRecoilState(ShowMenuState);
+  const [isShowRules, setShowRules] = useRecoilState(ShowRulesState);
+
   const userName = useRecoilValue(UserNameState);
 
 
   const handleMenuClick = () => {
-    // Update the boolean value to true
     setShowMenu(!isShowMenu);
+    if (isShowMenu) {
+      setShowRules(false);
+    }
   };
 
   return (
@@ -24,6 +29,7 @@ export function GameHeader() {
         </button>
         
         <h2>Pass 'Em</h2>
+        <img id='logo' alt='logo' src={passemlogo} />
       </div>
       
       <h3>{userName}</h3>

@@ -8,6 +8,8 @@ import { FinalScoreSelector } from "../finalScoreSelector/finalScoreSelector";
 import { NumPlayersSelector } from "../numPlayersSelector/numPlayersSelector";
 import { FinalScoreState, NumPlayersState, RebuttalState, UserNameState } from "../../recoilTypes";
 import { RebuttalSelector } from "../rebuttalSelector/rebuttalSelector";
+import passemlogo from '../../../assets/passemlogo.png';
+
 
 interface IJoinRoomProps {}
 
@@ -106,7 +108,12 @@ export function JoinRoom(props: IJoinRoomProps) {
   return (
     <div>
       <div id='joinHeader'>
-        <h2>Pass 'Em</h2>
+        <div id='titleLogo'>
+          <h2>Pass 'Em</h2>
+          <img id='logo' alt='logo' src={passemlogo} />
+        </div>
+        
+        
         <h3>{userName}</h3>
       </div>
       

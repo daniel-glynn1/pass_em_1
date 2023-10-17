@@ -12,6 +12,11 @@ export const ShowMenuState = atom<boolean>({
   default: false,
 });
 
+export const ShowRulesState = atom<boolean>({
+  key: 'ShowRulesState',
+  default: false,
+});
+
 export const UserNameState = atom<string>({
   key: 'UserNameState',
   default: '',

@@ -15,6 +15,7 @@ div#left {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  gap: 10px;
 }
 
 button#menubutton {
@@ -28,5 +29,9 @@ button#menubutton {
 img#menuicon {
   height: 15px;
   
+}
+
+img#logo {
+  height: 70px;
 }
 

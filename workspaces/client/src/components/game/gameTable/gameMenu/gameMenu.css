@@ -36,6 +36,17 @@ button#leave {
   font-weight: bold;
 }
 
+button#showrules {
+  width: 150px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--blue1);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: bold;
+}
+
 div#gameOptions {
   width: 140px;
   height: 70px;
@@ -54,4 +65,20 @@ div#gameOptions {
 
 div#gameOptions p {
   margin: 0;
+}
+
+div#scoring {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+div.scoringRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
 }

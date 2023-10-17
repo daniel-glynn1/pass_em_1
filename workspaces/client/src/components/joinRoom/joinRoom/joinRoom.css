@@ -133,3 +133,15 @@ button.createJoin {
   color: var(--white);
 }
 
+div#titleLogo {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+img#logo {
+  height: 70px;
+}
+
