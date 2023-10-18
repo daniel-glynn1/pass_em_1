@@ -66,17 +66,22 @@ div#createOrJoin {
   flex-direction: column;
 }
 
-
+div#buttonsOuter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
 
 div#buttons {
   display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
   width: 100%;
+  margin-bottom: 20px;
   
 }
-
-
-
 
 div#outer button {
   /* height: 3em; */
@@ -94,11 +99,15 @@ button.select {
 button#create {
   background-color: var(--pink1);
   color: var(--white);
-  
 }
 
 button#join {
   background-color: var(--blue5);
+  color: var(--white);
+}
+
+button#joinRandom {
+  background-color: var(--blue1);
   color: var(--white);
 }
 

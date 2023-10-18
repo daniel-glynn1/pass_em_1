@@ -1,5 +1,5 @@
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { CurrentLobbyState, Rolling1State, Rolling2State } from '../../../recoilTypes';
+import { useRecoilValue } from 'recoil';
+import { CurrentLobbyState, IsRandomLobbyState, Rolling1State, Rolling2State } from '../../../recoilTypes';
 import './gamePigs.css';
 import { useState, useEffect } from 'react';
 
@@ -15,8 +15,9 @@ const pigImages = [
 
 export function GamePigs() {
   const gameState = useRecoilValue(CurrentLobbyState)!;
-  const [isRolling1, setIsRolling1] = useRecoilState(Rolling1State);
-  const [isRolling2, setIsRolling2] = useRecoilState(Rolling2State);
+  const isRandomLobby = useRecoilValue(IsRandomLobbyState)!;
+  const isRolling1 = useRecoilValue(Rolling1State);
+  const isRolling2 = useRecoilValue(Rolling2State);
   const [pig1RollIndex, setPig1RollIndex] = useState(0);
   const [pig2RollIndex, setPig2RollIndex] = useState(0);
 
@@ -152,11 +153,12 @@ export function GamePigs() {
 
       {!gameState.isStarted && 
         <div className='tableMessage'>
-          <h4 id='roomName'>{gameState.lobbyName}</h4>
+          <h4 id='roomName'>{!isRandomLobby ? gameState.lobbyName : ''}</h4>
           <h4>Waiting for players to join ({gameState.numPlayers}/{gameState.maxNumPlayers})... </h4>
           
         </div>
       }
+      
     </div>
   );
 

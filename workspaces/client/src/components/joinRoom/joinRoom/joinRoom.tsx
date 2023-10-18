@@ -6,7 +6,7 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import './joinRoom.css';
 import { FinalScoreSelector } from "../finalScoreSelector/finalScoreSelector";
 import { NumPlayersSelector } from "../numPlayersSelector/numPlayersSelector";
-import { FinalScoreState, NumPlayersState, RebuttalState, UserNameState } from "../../recoilTypes";
+import { FinalScoreState, IsRandomLobbyState, NumPlayersState, RebuttalState, UserNameState } from "../../recoilTypes";
 import { RebuttalSelector } from "../rebuttalSelector/rebuttalSelector";
 import passemlogo from '../../../assets/passemlogo.png';
 
@@ -17,6 +17,8 @@ export function JoinRoom(props: IJoinRoomProps) {
   const [roomName, setRoomName] = useState("");
   const [roomPassword, setRoomPassword] = useState("");
   const [userName, setUserName] = useRecoilState(UserNameState);
+  const [isRandomLobby, setRandomLobby] = useRecoilState(IsRandomLobbyState);
+
 
   const numPlayers = useRecoilValue(NumPlayersState)!;
   const finalScore = useRecoilValue(FinalScoreState)!;
@@ -103,6 +105,31 @@ export function JoinRoom(props: IJoinRoomProps) {
 
   }
 
+  const joinRandomRoom = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const socket = socketService.socket;
+    if (!socket) return;
+
+    if (!userName || userName.trim() === "") {
+      alert("Enter a user name!");
+      return;
+    }
+
+    setJoining(true);
+
+
+    const joined = await gameService
+    .joinRandomGameRoom(socket, userName)
+    .catch((err) => {
+      alert(err);
+    });
+
+    setJoining(false);
+    setRandomLobby(true);
+
+  }
+
 
 
   return (
@@ -131,9 +158,13 @@ export function JoinRoom(props: IJoinRoomProps) {
             </div>
             <div id='createOrJoin'>
               <p>Do you want to create or join a lobby?</p>
-              <div id='buttons'>
-                <button id='create' className='select' type="submit" onClick={() => setCreator(true)}>Create Lobby</button>
-                <button id='join' className='select' type="submit" onClick={() => setCreator(false)}>Join Lobby</button>
+              <div id='buttonsOuter'>
+                <div id='buttons'>
+                  <button id='create' className='select' type="submit" onClick={() => setCreator(true)}>Create Lobby</button>
+                  <button id='join' className='select' type="submit" onClick={() => setCreator(false)}>Join Lobby</button>
+                </div>
+                <button id='joinRandom' className='select' type="button" onClick={joinRandomRoom} disabled={isJoining}>Join Random Lobby</button>
+
               </div>
             </div>
             

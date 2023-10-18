@@ -51,3 +51,8 @@ export const Rolling2State = atom<boolean>({
   key: 'Rolling2State',
   default: false,
 });
+
+export const IsRandomLobbyState = atom<boolean>({
+  key: 'IsRandomLobbyState',
+  default: false,
+});

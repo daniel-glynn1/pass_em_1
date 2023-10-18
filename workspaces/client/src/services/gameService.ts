@@ -49,6 +49,27 @@ class GameService {
     });
   }
 
+  public async joinRandomGameRoom(socket: Socket, userName: string): Promise<boolean> {
+    return new Promise((rs, rj) => {
+      const handleLobbyJoined = () => {
+        rs(true);
+        socket.off(ServerEvents.LobbyJoined, handleLobbyJoined);
+        socket.off(SocketExceptions.LobbyError, handleLobbyError);
+      };
+  
+      const handleLobbyError = ({ error }) => {
+        rj(error);
+        socket.off(ServerEvents.LobbyJoined, handleLobbyJoined);
+        socket.off(SocketExceptions.LobbyError, handleLobbyError);
+      };
+  
+      socket.emit(ClientEvents.LobbyJoinRandom, { userName: userName });
+  
+      socket.on(ServerEvents.LobbyJoined, handleLobbyJoined);
+      socket.on(SocketExceptions.LobbyError, handleLobbyError);
+    });
+  }
+
   public async leaveGameRoom(socket: Socket): Promise<boolean> {
     return new Promise((rs, rj) => {
       const handleLobbyLeft = () => {

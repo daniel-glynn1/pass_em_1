@@ -65,6 +65,15 @@ export class MainController {
     client.emit(ServerEvents.LobbyJoined);
   }
 
+  @OnMessage(ClientEvents.LobbyJoinRandom)
+  public async joinRandomLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
+    console.log(client.id, " is joining a random lobby");
+
+    this.lobbyManager.joinRandomLobby(client, message.userName);
+
+    client.emit(ServerEvents.LobbyJoined);
+  }
+
   @OnMessage(ClientEvents.LobbyLeave)
   public async leaveLobby(@SocketIO() io: Server, @ConnectedSocket() client: AuthenticatedSocket, @MessageBody() message: any) {
     console.log("User leaving room: ", client.id);
