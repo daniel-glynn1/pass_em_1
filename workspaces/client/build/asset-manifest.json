@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.effa5b27.css",
+    "main.js": "/static/js/main.4af6451e.js",
+    "static/js/415.b0d9b855.chunk.js": "/static/js/415.b0d9b855.chunk.js",
+    "static/media/passemlogo.png": "/static/media/passemlogo.a3a935f1220b35e41185.png",
+    "static/media/passemtable.png": "/static/media/passemtable.d8d015b433fd35f90ab3.png",
+    "static/media/pig1.png": "/static/media/pig1.33bfaa2aff085e318fd3.png",
+    "static/media/pig5.png": "/static/media/pig5.efb1139593ee8490b283.png",
+    "static/media/pig4.png": "/static/media/pig4.fe2f1f0baa968cda721f.png",
+    "static/media/pig2.png": "/static/media/pig2.56e8f1d20c9058e7b1ad.png",
+    "static/media/pig3.png": "/static/media/pig3.f1ea7b52a2acbc69e560.png",
+    "static/media/pig0.png": "/static/media/pig0.e6a2d603e6ccf18c8ee0.png",
+    "index.html": "/index.html",
+    "main.effa5b27.css.map": "/static/css/main.effa5b27.css.map",
+    "main.4af6451e.js.map": "/static/js/main.4af6451e.js.map",
+    "415.b0d9b855.chunk.js.map": "/static/js/415.b0d9b855.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.effa5b27.css",
+    "static/js/main.4af6451e.js"
+  ]
+}

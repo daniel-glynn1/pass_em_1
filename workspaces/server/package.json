@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon"
+    "dev": "nodemon",
+    "start": "ts-node ./src/server"
   },
   "dependencies": {
     "@pass_em_1/shared": "*",
