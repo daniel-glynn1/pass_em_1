@@ -4,4 +4,5 @@ node_modules/
 /workspaces/client/node_modules/.cache
 /workspaces/server/node_modules
 /workspaces/shared/node_modules
+.env
 

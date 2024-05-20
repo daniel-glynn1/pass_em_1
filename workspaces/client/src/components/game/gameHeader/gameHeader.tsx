@@ -28,8 +28,9 @@ export function GameHeader() {
           <img id='menuicon' alt='menu' src={isShowMenu ? x : menu} />
         </button>
         
-        <h2>Pass 'Em</h2>
         <img id='logo' alt='logo' src={passemlogo} />
+        <h2>Pass 'Em</h2>
+        
       </div>
       
       <h3>{userName}</h3>

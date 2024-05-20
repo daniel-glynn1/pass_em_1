@@ -18,12 +18,16 @@ div.tableMessage {
   height: 110px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
 
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.tableMessage h4 {
+  margin: 0px;
 }
 
 #roomName {

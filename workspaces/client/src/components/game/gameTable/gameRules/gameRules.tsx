@@ -77,7 +77,7 @@ export function GameRules() {
               <img className='pigImageRules' id='pig-2' src={pigImages[2]} alt={'pig2'}></img>
             </div>
             <div id='pigScore'>
-              <p id='rollName'>Double</p>
+              <p id='rollName'>Double (of any roll)</p>
               <p className='double' id='rollScore'>x2</p>
             </div>
           </div>

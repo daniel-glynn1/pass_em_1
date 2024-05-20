@@ -136,8 +136,9 @@ export function JoinRoom(props: IJoinRoomProps) {
     <div>
       <div id='joinHeader'>
         <div id='titleLogo'>
-          <h2>Pass 'Em</h2>
           <img id='logo' alt='logo' src={passemlogo} />
+          <h2>Pass 'Em</h2>
+          
         </div>
         
         
