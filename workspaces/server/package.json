@@ -18,7 +18,8 @@
     "morgan": "~1.9.1",
     "reflect-metadata": "^0.1.13",
     "socket-controllers": "^0.0.5",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^16.0.0",
