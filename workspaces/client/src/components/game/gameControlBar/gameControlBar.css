@@ -74,4 +74,28 @@ h4#myTurn {
   color: var(--blue5);
 }
 
+@media (max-width: 700px) {
+  div#gameButtons {
+    width: 60%;
+    gap: 5px;
+  }
+
+  button.startgame {
+    width: 35%;
+  }
+
+  div#turnInfo h4 {
+    font-size: 0.9rem;
+  }
+
+  div#turnInfo p {
+    font-size: 0.9rem;
+  } 
+
+  div#turnInfo {
+    gap: 2px;
+  }
+  
+}
+
 

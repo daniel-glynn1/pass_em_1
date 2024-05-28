@@ -10,7 +10,7 @@ div#gameRules {
 
   margin: 0;
 
-  z-index: 2;
+  z-index: 4;
 }
 
 div#rulesHeader {
@@ -72,9 +72,20 @@ p#asterixExplanation {
   color: var(--pink1);
 }
 
+p#asterixExplanation2 {
+  padding-left: 40px;
+  color: var(--blue5);
+}
+
 div#scoring {
   margin-left: 40px;
   margin-top: 10px;
+}
+
+div.scoringRow {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 div.scoringExample {
@@ -111,12 +122,12 @@ div#pigScore {
 
 }
 
-p#rollName {
+p#rollNameRules {
   align-self: flex-end;
   margin: 0;
 }
 
-p#rollScore {
+p#rollScoreRules {
   align-self: flex-end;
   margin: 0;
 }
@@ -145,4 +156,67 @@ p#rollScore {
 }
 #pig-5 {
   transform: rotate(-135deg);
+}
+
+@media (max-width: 700px) {
+  div#gameRules {
+    overflow-y: scroll;
+  }
+  div.scoringExample {
+    width: 90px;
+    height: 60px;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: space-between;
+  }
+
+  div#scoring {
+    margin-left: 5px;
+  }
+
+  div.scoringRow {
+    gap: 2px;
+    flex-wrap: wrap;
+  }
+
+  div#pigs {
+    padding-top: 5px;
+  }
+
+  /* div#pigs {
+    width: 90%;
+    padding-top: 5px;
+  }
+  
+  div#pigScore {
+    width: 90%;
+    height: 30px;
+  } */
+  div#rulesExplanation {
+    gap: 5px;
+  }
+
+  .pigImageRules {
+    width: 25px;
+  }
+
+  p#rollNameRules {
+    font-size: 0.7rem;
+  }
+  
+  p#rollScoreRules {
+    font-size: 0.7rem;
+  }
+  
+  p#asterixExplanation {
+    padding-left: 20px;
+    margin-bottom: 0;
+  }
+  
+  p#asterixExplanation2 {
+    padding-left: 20px;
+  }
 }

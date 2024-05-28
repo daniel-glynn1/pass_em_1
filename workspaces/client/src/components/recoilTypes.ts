@@ -17,6 +17,16 @@ export const ShowRulesState = atom<boolean>({
   default: false,
 });
 
+export const ShowChatState = atom<boolean>({
+  key: 'ShowChatState',
+  default: false,
+});
+
+export const ShowScoreboardState = atom<boolean>({
+  key: 'ShowScoreboardState',
+  default: false,
+});
+
 export const UserNameState = atom<string>({
   key: 'UserNameState',
   default: '',
@@ -54,5 +64,15 @@ export const Rolling2State = atom<boolean>({
 
 export const IsRandomLobbyState = atom<boolean>({
   key: 'IsRandomLobbyState',
+  default: false,
+});
+
+export const HideSidebarState = atom<boolean>({
+  key: 'HideSidebarState',
+  default: false,
+});
+
+export const MobileState = atom<boolean>({
+  key: 'MobileState',
   default: false,
 });

@@ -1,11 +1,12 @@
-import { useRecoilValue } from 'recoil';
-import { CurrentLobbyState } from '../../recoilTypes';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { CurrentLobbyState, ShowScoreboardState } from '../../recoilTypes';
 import './gamePlayers.css';
-
+import x from '../../../assets/x.png';
 
 
 export function GamePlayers() {
   const gameState = useRecoilValue(CurrentLobbyState)!;
+  const [isShowScoreboard, setShowScoreboard] = useRecoilState(ShowScoreboardState);
   
   let players = Object.entries(gameState.scores);
 
@@ -14,9 +15,21 @@ export function GamePlayers() {
     return gameState.currentTurnPlayer === key;
   }
 
+  const handleCloseButtonClick = () => {
+    setShowScoreboard(false);
+  };
+
   return (
-    <div id='playersOuter'>
-      <h4>Scoreboard</h4>
+    <div id={isShowScoreboard ? 'playersOuterSidebar' : 'playersOuter'}>
+      <div id={isShowScoreboard ? 'playersHeaderSidebar' : 'playersHeader'}>
+        <h4 id='playersTitle'>Scoreboard</h4>
+        { isShowScoreboard && 
+          <button id='closebutton' onClick={handleCloseButtonClick}>
+            <img id='closeicon' alt='close' src={x} />
+          </button>
+        }
+      </div>
+      
       <div id='playersList'>
       
         {players.map(([key, value], index) => (

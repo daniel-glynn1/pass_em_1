@@ -1,14 +1,17 @@
 import './gameChat.css';
-import { useRecoilValue } from 'recoil';
-import { ChatState, CurrentLobbyState } from '../../recoilTypes';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { ChatState, CurrentLobbyState, ShowChatState } from '../../recoilTypes';
 import { useState, useRef, useEffect } from 'react';
 import socketService from "../../../services/socketService";
 import gameService from "../../../services/gameService";
 import send from '../../../assets/send.png';
+import x from '../../../assets/x.png';
+
 
 export function GameChat() {
   const gameState = useRecoilValue(CurrentLobbyState)!;
   const chatState = useRecoilValue(ChatState);
+  const [isShowChat, setShowChat] = useRecoilState(ShowChatState);
   const [chatMessage, setChatMessage] = useState("");
 
   const ref = useRef<HTMLDivElement>(null);
@@ -48,6 +51,11 @@ export function GameChat() {
     }
     return 100; 
   }
+
+  const handleCloseButtonClick = () => {
+    setShowChat(false);
+  };
+
   
   useEffect(() => {
     if (chatState.length) {
@@ -60,8 +68,17 @@ export function GameChat() {
   
 
   return (
-    <div id='chatOuter'>
-      <h4 id='chatTitle'>Chat</h4>
+    <div id={isShowChat ? 'chatOuterSidebar' : 'chatOuter'}>
+      <div id={isShowChat ? 'chatHeaderSidebar' : 'chatHeader'}>
+        <h4 id='chatTitle'>Chat</h4>
+        { isShowChat && 
+          <button id='closebutton' onClick={handleCloseButtonClick}>
+            <img id='closeicon' alt='close' src={x} />
+          </button>
+        }
+        
+      </div>
+      
       <div id='chatList'>
         {chatState.map((item, index) => (
           <div key={index} className='chatMessage'>
@@ -75,7 +92,7 @@ export function GameChat() {
       </div>
       
       <form id='chat' onSubmit={sendChatMessage}>
-        <input id='chatinput' type="text" maxLength={100} placeholder="chat" value={chatMessage} onChange={handleChatMessageChange}/>
+        <input id='chatinput' type="text" maxLength={100} placeholder="say something" value={chatMessage} onChange={handleChatMessageChange}/>
         <button id='submitchat' type="submit">
           <img id='sendicon' alt='send' src={send} />
         </button>

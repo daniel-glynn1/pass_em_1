@@ -44,8 +44,8 @@ export function GameRules() {
               <img className='pigImageRules' id='pig-1' src={pigImages[1]} alt={'pig1'}></img>
             </div>
             <div id='pigScore'>
-              <p id='rollName'>Pig Out!</p>
-              <p id='rollScore' className='asterix'>0*</p>
+              <p id='rollNameRules'>Pig Out!</p>
+              <p id='rollScoreRules' className='asterix'>0*</p>
             </div>
           </div>
 
@@ -55,8 +55,8 @@ export function GameRules() {
               <img className='pigImageRules' id='pig-0' src={pigImages[0]} alt={'pig0'}></img>
             </div>
             <div id='pigScore'>
-              <p id='rollName'></p>
-              <p id='rollScore'>0</p>
+              <p id='rollNameRules'></p>
+              <p id='rollScoreRules'>0</p>
             </div>
           </div>
 
@@ -66,8 +66,8 @@ export function GameRules() {
               <img className='pigImageRules' id='pig-1' src={pigImages[1]} alt={'pig1'}></img>
             </div>
             <div id='pigScore'>
-              <p id='rollName'>Sider</p>
-              <p id='rollScore'>1</p>
+              <p id='rollNameRules'>Sider</p>
+              <p id='rollScoreRules'>1</p>
             </div>
           </div>
 
@@ -77,8 +77,8 @@ export function GameRules() {
               <img className='pigImageRules' id='pig-2' src={pigImages[2]} alt={'pig2'}></img>
             </div>
             <div id='pigScore'>
-              <p id='rollName'>Double (of any roll)</p>
-              <p className='double' id='rollScore'>x2</p>
+              <p id='rollNameRules'>Double</p>
+              <p className='double' id='rollScoreRules'>x2*</p>
             </div>
           </div>
         </div>
@@ -89,8 +89,8 @@ export function GameRules() {
               <img className='pigImageRules' id='pig-0' src={pigImages[0]} alt={'pig0'}></img>
             </div>
             <div id='pigScore'>
-              <p id='rollName'>Razorback</p>
-              <p id='rollScore'>5</p>
+              <p id='rollNameRules'>Razorback</p>
+              <p id='rollScoreRules'>5</p>
             </div>
           </div>
 
@@ -100,8 +100,8 @@ export function GameRules() {
               <img className='pigImageRules' id='pig-0' src={pigImages[0]} alt={'pig0'}></img>
             </div>
             <div id='pigScore'>
-              <p id='rollName'>Trotter</p>
-              <p id='rollScore'>5</p>
+              <p id='rollNameRules'>Trotter</p>
+              <p id='rollScoreRules'>5</p>
             </div>
           </div>
 
@@ -111,8 +111,8 @@ export function GameRules() {
               <img className='pigImageRules' id='pig-0' src={pigImages[0]} alt={'pig0'}></img>
             </div>
             <div id='pigScore'>
-              <p id='rollName'>Snouter</p>
-              <p id='rollScore'>10</p>
+              <p id='rollNameRules'>Snouter</p>
+              <p id='rollScoreRules'>10</p>
             </div>
           </div>
 
@@ -122,8 +122,8 @@ export function GameRules() {
               <img className='pigImageRules' id='pig-0' src={pigImages[0]} alt={'pig0'}></img>
             </div>
             <div id='pigScore'>
-              <p id='rollName'>Leaning Jowler</p>
-              <p id='rollScore'>15</p>
+              <p id='rollNameRules'>Leaning Jowler</p>
+              <p id='rollScoreRules'>15</p>
             </div>
           </div>
         </div>
@@ -131,6 +131,8 @@ export function GameRules() {
       </div>
 
       <p id='asterixExplanation'>*Lose all points for this turn and pass</p>
+      <p id='asterixExplanation2'>*If both pigs are the same roll, this roll's points are doubled (e.g. 2 Razorbacks = (5+5)*2 = 20).</p>
+
 
     </div>
   );

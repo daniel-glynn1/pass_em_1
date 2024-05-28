@@ -18,6 +18,15 @@ div#main {
   gap: 10px;
 }
 
+div#mainFull {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
+}
+
 div#sidebar {
   display: flex;
   flex-direction: column;
@@ -35,3 +44,4 @@ div#sidebar h4 {
   margin: 0px;
   padding-bottom: 0px;
 }
+
