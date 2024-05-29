@@ -5,7 +5,7 @@ import socketService from './services/socketService';
 import { JoinRoom } from './components/joinRoom/joinRoom/joinRoom';
 import { Game } from './components/game/game/game';
 import gameService from './services/gameService';
-import { ChatState, CurrentLobbyState, NewChatState } from './components/recoilTypes';
+import { ChatState, CurrentLobbyState, NewChatState, Rolling1State, Rolling2State } from './components/recoilTypes';
 import { ServerEvents } from './shared/types/serverEvents';
 import { ServerPayloads } from './shared/types/serverPayloads';
 
@@ -13,6 +13,8 @@ function App() {
   const [gameState, setGameState] = useRecoilState(CurrentLobbyState);
   const [chatState, setChatState] = useRecoilState(ChatState);
   const [isNewChat, setNewChat] = useRecoilState(NewChatState);
+  const [isRolling1, setIsRolling1] = useRecoilState(Rolling1State);
+  const [isRolling2, setIsRolling2] = useRecoilState(Rolling2State);
 
 
   const messageListener = (data: ServerPayloads[ServerEvents.GameMessage]) => {
@@ -20,7 +22,6 @@ function App() {
     if (data.senderCode != 100) {
       setNewChat(true);
     }
-    
   }
 
   const handleGameMessage = () => {
@@ -35,11 +36,38 @@ function App() {
     }
   }
 
+  const startRollListener = () => {
+    setIsRolling1(true);
+    
+    // roll animation for 2 seconds
+    setTimeout(() => {
+      setIsRolling1(false);
+
+      setIsRolling2(true);
+      setTimeout(() => {
+        setIsRolling2(false);
+      }, 750);
+
+    }, 2000);
+  }
+
+  const handleStartRoll = () => {
+    if (socketService.socket) {
+      gameService.onStartRoll(socketService.socket, startRollListener);
+    }
+  }
+
+  const removeStartRoll = () => {
+    if (socketService.socket) {
+      gameService.offStartRoll(socketService.socket, startRollListener);
+    }
+  }
+
 
   const connectSocket = async () => {
     const socket = await socketService
-      .connect("https://pass-em-api.onrender.com")
-      // .connect("http://localhost:4000")
+      // .connect("https://pass-em-api.onrender.com")
+      .connect("http://localhost:4000")
       .catch((err) => {
         console.log("Error: ", err);
       });
@@ -63,10 +91,10 @@ function App() {
   
 
   useEffect(() => {
-    // window.onbeforeunload = function(event)
-    // {
-    //     return window.confirm("Confirm refresh");
-    // };
+    window.onbeforeunload = function(event)
+    {
+      return window.confirm("Confirm refresh");
+    };
     
     if (!socketService.socket) {
       connectSocket();
@@ -74,10 +102,12 @@ function App() {
       
     handleGameUpdate();
     handleGameMessage();
+    handleStartRoll();
 
     return () => {
       removeGameUpdate();
       removeGameMessage();
+      removeStartRoll();
       socketService.socket?.off(ServerEvents.GameMessage);
     }
   }, []);

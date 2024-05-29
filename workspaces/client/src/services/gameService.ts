@@ -137,6 +137,15 @@ class GameService {
     });
   }
 
+  public async onStartRoll(socket: Socket, listener: () => void) {
+    socket.on(ServerEvents.GameStartRoll, () => {
+      listener();
+    });
+  }
+  public async offStartRoll(socket: Socket, listener: () => void) {
+    socket.off(ServerEvents.GameStartRoll, listener);
+  }
+
 }
 
 

@@ -123,6 +123,10 @@ export class Lobby
     this.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, chatMessage);
   }
 
+  public sendStartRoll(): void {
+    this.dispatchToLobby<{}>(ServerEvents.GameStartRoll, {});
+  }
+
   public dispatchLobbyState(): void
   {
     const payload: ServerPayloads[ServerEvents.LobbyState] = {

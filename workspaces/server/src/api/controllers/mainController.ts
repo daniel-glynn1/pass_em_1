@@ -128,10 +128,13 @@ export class MainController {
     if (message.choice === 'pass') {
       client.data.lobby.gameState.passPigs(client);
     } else if (message.choice === 'roll') {
-      client.data.lobby.gameState.rollPigs(client);
+      client.data.lobby.sendStartRoll();
+      setTimeout(() => {
+        client.data.lobby.gameState.rollPigs(client);
+      }, 2000);
+      
     }
   }
-
 
 }
 

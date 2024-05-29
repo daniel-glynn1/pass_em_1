@@ -18,21 +18,8 @@ export function GameControlBar() {
   let isCreator = socketService.socket && gameState.creatorId === socketService.socket.id;
 
   const handleRollButton = () => {
-    setIsRolling1(true);
-
-    // roll animation for 2 seconds
-    setTimeout(() => {
-      if (socketService.socket)
-        gameService.updateGame(socketService.socket, 'roll');
-      setIsRolling1(false);
-
-      setIsRolling2(true);
-      setTimeout(() => {
-        setIsRolling2(false);
-      }, 750);
-
-    }, 2000);
-    
+    if (socketService.socket)
+      gameService.updateGame(socketService.socket, 'roll');
   }
 
   const handlePassButton = () => {

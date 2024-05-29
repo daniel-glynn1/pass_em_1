@@ -13,4 +13,5 @@ export enum ServerEvents
   GameStarted = 'server.game.started',
   GameFinished = 'server.game.finished',
   GameMessage = 'server.game.message',
+  GameStartRoll = 'server.game.startroll',
 }
