@@ -66,8 +66,8 @@ function App() {
 
   const connectSocket = async () => {
     const socket = await socketService
-      // .connect("https://pass-em-api.onrender.com")
-      .connect("http://localhost:4000")
+      .connect("https://pass-em-api.onrender.com")
+      // .connect("http://localhost:4000")
       .catch((err) => {
         console.log("Error: ", err);
       });
