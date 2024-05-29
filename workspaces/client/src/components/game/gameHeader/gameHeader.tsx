@@ -1,5 +1,5 @@
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { ShowRulesState, ShowChatState, ShowScoreboardState, HideSidebarState, UserNameState } from '../../recoilTypes';
+import { ShowRulesState, ShowChatState, ShowScoreboardState, HideSidebarState, UserNameState, NewChatState } from '../../recoilTypes';
 import { ShowMenuState } from '../../recoilTypes';
 import menu from '../../../assets/menu.png';
 import x from '../../../assets/x.png';
@@ -15,6 +15,7 @@ export function GameHeader() {
   const [isShowChat, setShowChat] = useRecoilState(ShowChatState);
   const [isShowScoreboard, setShowScoreboard] = useRecoilState(ShowScoreboardState);
   const [isHideSidebar, setHideSidebar] = useRecoilState(HideSidebarState);
+  const [newChatState, setNewChatState] = useRecoilState(NewChatState);
 
 
   const userName = useRecoilValue(UserNameState);
@@ -32,6 +33,7 @@ export function GameHeader() {
       setShowScoreboard(false);
     }
     setShowChat(!isShowChat);
+    setNewChatState(false);
   };
 
   const handleScoreboardButtonClick = () => {
@@ -56,6 +58,9 @@ export function GameHeader() {
       {/* <h3>{userName}</h3> */}
       { isHideSidebar && 
         <div id="sidebarbuttons">
+          { newChatState && 
+            <div id='newchaticon'></div>
+          }
           <button id='chatbutton' className='sidebarbutton' onClick={handleChatButtonClick}>
             <img id='chaticon' alt='chat' src={chat} />
           </button>

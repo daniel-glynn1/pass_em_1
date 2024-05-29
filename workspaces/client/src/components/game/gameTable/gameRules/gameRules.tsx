@@ -131,7 +131,7 @@ export function GameRules() {
       </div>
 
       <p id='asterixExplanation'>*Lose all points for this turn and pass</p>
-      <p id='asterixExplanation2'>*If both pigs are the same roll, this roll's points are doubled (e.g. 2 Razorbacks = (5+5)*2 = 20).</p>
+      <p id='asterixExplanation2'>*If both pigs are the same roll, this roll's points are doubled (e.g. 2 Trotters = (5+5)*2 = 20)</p>
 
 
     </div>

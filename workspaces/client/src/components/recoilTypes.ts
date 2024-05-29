@@ -37,6 +37,11 @@ export const ChatState = atom<ServerPayloads[ServerEvents.GameMessage][]>({
   default: [],
 });
 
+export const NewChatState = atom<boolean>({
+  key: 'NewChatState',
+  default: false,
+});
+
 export const FinalScoreState = atom<number>({
   key: 'FinalScoreState',
   default: 100,

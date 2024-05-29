@@ -5,16 +5,22 @@ import socketService from './services/socketService';
 import { JoinRoom } from './components/joinRoom/joinRoom/joinRoom';
 import { Game } from './components/game/game/game';
 import gameService from './services/gameService';
-import { ChatState, CurrentLobbyState } from './components/recoilTypes';
+import { ChatState, CurrentLobbyState, NewChatState } from './components/recoilTypes';
 import { ServerEvents } from './shared/types/serverEvents';
 import { ServerPayloads } from './shared/types/serverPayloads';
 
 function App() {
   const [gameState, setGameState] = useRecoilState(CurrentLobbyState);
   const [chatState, setChatState] = useRecoilState(ChatState);
+  const [newChatState, setNewChatState] = useRecoilState(NewChatState);
+
 
   const messageListener = (data: ServerPayloads[ServerEvents.GameMessage]) => {
     setChatState((oldChat: ServerPayloads[ServerEvents.GameMessage][]) => [...oldChat, data]);
+    if (data.senderCode != 100) {
+      setNewChatState(true);
+    }
+    
   }
 
   const handleGameMessage = () => {

@@ -70,6 +70,7 @@ p.double {
 p#asterixExplanation {
   padding-left: 40px;
   color: var(--pink1);
+  margin-bottom: 0;
 }
 
 p#asterixExplanation2 {
