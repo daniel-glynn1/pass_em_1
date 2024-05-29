@@ -1,6 +1,6 @@
 import './gameChat.css';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { ChatState, CurrentLobbyState, ShowChatState } from '../../recoilTypes';
+import { ChatState, CurrentLobbyState, ShowChatState, NewChatState } from '../../recoilTypes';
 import { useState, useRef, useEffect } from 'react';
 import socketService from "../../../services/socketService";
 import gameService from "../../../services/gameService";
@@ -13,6 +13,8 @@ export function GameChat() {
   const chatState = useRecoilValue(ChatState);
   const [isShowChat, setShowChat] = useRecoilState(ShowChatState);
   const [chatMessage, setChatMessage] = useState("");
+  const [isNewChat, setNewChat] = useRecoilState(NewChatState);
+
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -54,6 +56,7 @@ export function GameChat() {
 
   const handleCloseButtonClick = () => {
     setShowChat(false);
+    setNewChat(false);
   };
 
   

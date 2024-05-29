@@ -19,7 +19,7 @@ div#chatOuterSidebar {
   top: 0px;
   right: 0px;
 
-  z-index: 4;
+  z-index: 6;
   /* overflow-y: auto; */
   display: flex;
   flex-direction: column;
@@ -113,6 +113,7 @@ input#chatinput {
   border: 1px solid var(--gray);
   background-color: var(--black);
   color: var(--white);
+  font-size: 16px;
 }
 
 button#submitchat {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { ShowMenuState, ShowRulesState, ShowChatState, ShowScoreboardState, HideSidebarState, MobileState } from '../../recoilTypes';
+import { ShowMenuState, ShowRulesState, ShowChatState, ShowScoreboardState, HideSidebarState, MobileState, NewChatState } from '../../recoilTypes';
 import { GameRoom } from '../gameRoom/gameRoom';
 import './game.css';
 
@@ -13,6 +13,7 @@ export function Game() {
   const [isShowScoreboard, setShowScoreboard] = useRecoilState(ShowScoreboardState);
   const [isHideSidebar, setHideSidebar] = useRecoilState(HideSidebarState);
   const [isMobile, setMobile] = useRecoilState(MobileState);
+  const [isNewChat, setNewChat] = useRecoilState(NewChatState);
 
 
 
@@ -27,10 +28,12 @@ export function Game() {
       setMobile(false);
       setShowChat(false);
       setShowScoreboard(false);
+      setNewChat(false);
       
     } else if (window.innerWidth >= 700) {
       setHideSidebar(true);
       setMobile(false);
+      
     } else {
       setHideSidebar(true);
       setMobile(true);

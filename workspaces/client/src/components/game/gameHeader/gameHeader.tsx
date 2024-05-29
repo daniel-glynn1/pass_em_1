@@ -15,7 +15,7 @@ export function GameHeader() {
   const [isShowChat, setShowChat] = useRecoilState(ShowChatState);
   const [isShowScoreboard, setShowScoreboard] = useRecoilState(ShowScoreboardState);
   const [isHideSidebar, setHideSidebar] = useRecoilState(HideSidebarState);
-  const [newChatState, setNewChatState] = useRecoilState(NewChatState);
+  const [isNewChat, setNewChat] = useRecoilState(NewChatState);
 
 
   const userName = useRecoilValue(UserNameState);
@@ -33,7 +33,7 @@ export function GameHeader() {
       setShowScoreboard(false);
     }
     setShowChat(!isShowChat);
-    setNewChatState(false);
+    setNewChat(false);
   };
 
   const handleScoreboardButtonClick = () => {
@@ -58,7 +58,7 @@ export function GameHeader() {
       {/* <h3>{userName}</h3> */}
       { isHideSidebar && 
         <div id="sidebarbuttons">
-          { newChatState && 
+          { isNewChat && 
             <div id='newchaticon'></div>
           }
           <button id='chatbutton' className='sidebarbutton' onClick={handleChatButtonClick}>

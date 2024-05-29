@@ -47,13 +47,13 @@ input {
   border: none;
   /* border: 5px solid var(--blue1); */
   border-radius: 10px;
+  font-size: 16px;
 }
 
 div#nameInput {
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
 div.roomInput {
@@ -97,10 +97,10 @@ div#outer button {
 }
 
 button.select {
-  width: 40%;
-  height: 3em;
+  width: 45%;
+  height: 50px;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 1.0rem;
   border-radius: 10px;
 }
 
@@ -160,5 +160,11 @@ div#titleLogo {
 
 img#logo {
   height: 70px;
+}
+
+@media (max-width: 700px) {
+  button.select {
+    font-size: 0.8rem;
+  }
 }
 

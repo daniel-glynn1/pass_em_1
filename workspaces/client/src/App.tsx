@@ -12,13 +12,13 @@ import { ServerPayloads } from './shared/types/serverPayloads';
 function App() {
   const [gameState, setGameState] = useRecoilState(CurrentLobbyState);
   const [chatState, setChatState] = useRecoilState(ChatState);
-  const [newChatState, setNewChatState] = useRecoilState(NewChatState);
+  const [isNewChat, setNewChat] = useRecoilState(NewChatState);
 
 
   const messageListener = (data: ServerPayloads[ServerEvents.GameMessage]) => {
     setChatState((oldChat: ServerPayloads[ServerEvents.GameMessage][]) => [...oldChat, data]);
     if (data.senderCode != 100) {
-      setNewChatState(true);
+      setNewChat(true);
     }
     
   }
