@@ -202,6 +202,11 @@ export function JoinRoom(props: IJoinRoomProps) {
         </div>
       )}
       </div>
+
+      <div id='hostExplanation'>
+        <p>*Note: Due to the (free) nature of how this site is hosted on render.com, the server will spin down with inactivity, which can delay requests by 50 seconds or more.</p>
+        <p>This means that it may take a bit to start up a new lobby, but after that the server should respond right away.</p>
+      </div>
     </div>
     
   );

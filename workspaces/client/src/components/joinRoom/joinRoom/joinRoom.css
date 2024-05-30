@@ -162,6 +162,22 @@ img#logo {
   height: 70px;
 }
 
+div#hostExplanation {
+  width: 100%;
+  font-size: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
+  gap: 5px;
+}
+
+div#hostExplanation p {
+  margin: 0;
+}
+
 @media (max-width: 700px) {
   button.select {
     font-size: 0.8rem;
